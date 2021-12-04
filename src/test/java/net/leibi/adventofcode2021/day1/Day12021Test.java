@@ -7,6 +7,16 @@ import org.junit.jupiter.api.Test;
 class Day12021Test {
 
   @Test
+  void getNumberOfEncreasesWithSlidingWindowShort() {
+    assertThat(Day12021.getNumberOfEncreasesWithSlidingWindow(Input.SHORT_INPUT)).isEqualTo(5);
+  }
+
+  @Test
+  void getNumberOfEncreasesWithSlidingWindow() {
+    assertThat(Day12021.getNumberOfEncreasesWithSlidingWindow(Input.LONG_INPUT)).isEqualTo(1600);
+  }
+
+  @Test
   void getNumberOfEncreasesShort() {
     assertThat(Day12021.getNumberOfEncreases(Input.SHORT_INPUT)).isEqualTo(7);
   }

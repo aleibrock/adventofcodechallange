@@ -19,4 +19,22 @@ public class Day12021 {
     }
     return cnt;
   }
+
+  public static int getNumberOfEncreasesWithSlidingWindow(final String input) {
+    List<Integer> inputList = getIntegerListFromInput(input);
+    int cnt = 0;
+    for (int i = 0; i < inputList.size(); i++) {
+      if (i > 2 && getCurrentWindow(inputList, i ) > getCurrentWindow(inputList, i-1)) {
+        cnt++;
+      }
+    }
+    return cnt;
+  }
+
+  private static int getCurrentWindow(List<Integer> inputList, int lastElement) {
+    assert (inputList.size() > lastElement);
+    return inputList.get(lastElement)
+        + inputList.get(lastElement - 1)
+        + inputList.get(lastElement - 2);
+  }
 }
