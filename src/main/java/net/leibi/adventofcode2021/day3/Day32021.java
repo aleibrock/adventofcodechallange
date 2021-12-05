@@ -19,8 +19,8 @@ public class Day32021 {
     List<String> filteredRowList = rowList;
     for (int i = 0; i < columns.size(); i++) {
       columns = getColumnsFromRowList(filteredRowList);
-      int mostCommonBit = getLeastCommonBinaryInString(columns.get(i));
-      filteredRowList = getRowsWithBinaryInPosition(filteredRowList, mostCommonBit, i);
+      int leastCommonBinaryInString = getLeastCommonBinaryInString(columns.get(i));
+      filteredRowList = getRowsWithBinaryInPosition(filteredRowList, leastCommonBinaryInString, i);
       if (filteredRowList.size() == 1) break;
     }
     assert (filteredRowList.size() == 1);
