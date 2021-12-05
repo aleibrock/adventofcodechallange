@@ -2,14 +2,30 @@ package net.leibi.adventofcode2021.day2;
 
 import java.util.Arrays;
 import java.util.List;
-import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class Day22021 {
 
+  int getResultWithAim(final String input) {
+    final List<Event> events = parseInput(input);
+    int aim = 0;
+    int depth = 0;
+    int hozPos = 0;
 
+    for (Event event : events) {
+      switch (event.getDirection()) {
+        case "forward" -> {
+          hozPos += event.getAmount();
+          depth += aim * event.getAmount();
+        }
+        case "up" -> aim -= event.getAmount();
+        case "down" -> aim += event.getAmount();
+        default -> throw new IllegalStateException("Unexpected value: " + event.getDirection());
+      }
+    }
+    return depth * hozPos;
+  }
 
   static int getResult(final String input){
     final List<Event> events = parseInput(input);

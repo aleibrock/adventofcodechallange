@@ -12,6 +12,19 @@ class Day22021Test {
     assertThat(Day22021.getResult(Input.SHORT_INPUT)).isEqualTo(150);
   }
 
+
+  @Test
+  void getResultWithAimShort() {
+    Day22021 day22021 = new Day22021();
+    assertThat(day22021.getResultWithAim(Input.SHORT_INPUT)).isEqualTo(900);
+  }
+
+  @Test
+  void getResultWithAim() {
+    Day22021 day22021 = new Day22021();
+    assertThat(day22021.getResultWithAim(Input.LONG_INPUT)).isEqualTo(1741971043);
+  }
+
   @Test
   void getResult() {
     assertThat(Day22021.getResult(Input.LONG_INPUT)).isEqualTo(1746616);
