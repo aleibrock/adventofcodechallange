@@ -19,8 +19,8 @@ public class Day22021 {
           hozPos += event.getAmount();
           depth += aim * event.getAmount();
         }
-        case "up" -> aim -= event.getAmount();
-        case "down" -> aim += event.getAmount();
+        case "up" -> aim -= event.getAmount(); // NOSONAR
+        case "down" -> aim += event.getAmount(); // NOSONAR
         default -> throw new IllegalStateException("Unexpected value: " + event.getDirection());
       }
     }
