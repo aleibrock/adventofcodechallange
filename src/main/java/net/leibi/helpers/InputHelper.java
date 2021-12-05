@@ -11,4 +11,8 @@ public class InputHelper {
   public static List<Integer> getIntegerListFromInput(final String input) {
     return Arrays.stream(input.split("\\r?\\n")).map(Integer::valueOf).toList();
   }
+
+  public static List<String> getRowListFromInput(final String input) {
+    return Arrays.stream(input.split("\\r?\\n")).toList();
+  }
 }
