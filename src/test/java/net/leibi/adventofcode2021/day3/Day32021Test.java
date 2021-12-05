@@ -10,6 +10,21 @@ class Day32021Test {
   private final Day32021 day32021 = new Day32021();
 
   @Test
+  void getLifeSupportRatingShort() {
+    assertThat(day32021.getLifeSupportRating(Input.SHORT_INPUT)).isEqualTo(230);
+    }
+
+  @Test
+  void co2ScrubberRatingShort() {
+    assertThat(day32021.co2ScrubberRating(Input.SHORT_INPUT)).isEqualTo(10);
+    }
+
+  @Test
+  void getOxigenGeneratorRatingShort() {
+    assertThat(day32021.getOxigenGeneratorRating(Input.SHORT_INPUT)).isEqualTo(23);
+    }
+
+  @Test
   void getGammaValue() {
     List<String> columns = day32021.getColumnsFromInput("""
     00100

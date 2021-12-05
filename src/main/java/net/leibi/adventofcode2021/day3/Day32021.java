@@ -1,11 +1,45 @@
 package net.leibi.adventofcode2021.day3;
 
+import static java.util.Objects.isNull;
 import static net.leibi.helpers.InputHelper.getRowListFromInput;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Day32021 {
+
+  public int getLifeSupportRating(final String input) {
+    return getOxigenGeneratorRating(input) * co2ScrubberRating(input);
+  }
+
+  int co2ScrubberRating(String input) {
+    return 0;
+  }
+
+  int getOxigenGeneratorRating(String input) {
+    List<String> rowList = getRowListFromInput(input);
+    List<String> columns = getColumnsFromRowList(rowList);
+
+    List<String> filteredRowList = rowList;
+    for (int i = 0; i < columns.size(); i++) {
+      columns = getColumnsFromRowList(filteredRowList);
+      int mostCommonBit = getMostCommonBinaryInString(columns.get(i));
+      filteredRowList = getRowsWithBinaryInPosition(filteredRowList, mostCommonBit, i);
+      if (filteredRowList.size() == 1) break;
+    }
+    assert (filteredRowList.size() == 1);
+    return getIntegerFromString(filteredRowList.get(0));
+  }
+
+  List<String> getColumnsFromInput(final String input) {
+    return getColumnsFromRowList(getRowListFromInput(input));
+  }
+
+  private int getIntegerFromString(String s) {
+    int[] intArray = Arrays.stream(s.split("")).map(Integer::valueOf).mapToInt(i -> i).toArray();
+    return getIntegerFromIntArray(intArray);
+  }
 
   public int getPowerConsumption(final String input) {
 
@@ -16,18 +50,24 @@ public class Day32021 {
     return gammaValue * epsilonRate;
   }
 
-  List<String> getColumnsFromInput(final String input) {
-    List<String> rowlist = getRowListFromInput(input);
+  private List<String> getRowsWithBinaryInPosition(List<String> rowList, int mostCommonBit, int i) {
+    List<String> filteredList = new ArrayList<>();
+    for (String s : rowList) {
+      if(Character.getNumericValue(s.charAt(i)) == mostCommonBit){
+        filteredList.add(s);
+      }
+    }
+    return filteredList;
+  }
 
+  private List<String> getColumnsFromRowList(List<String> rowlist) {
     int columnSize = rowlist.get(0).length();
-
     List<String> columns = new ArrayList<>();
-
     for (String s : rowlist) {
       char[] splittedString = s.toCharArray();
       assert (splittedString.length == columnSize);
       for (int i = 0; i < splittedString.length; i++) {
-        if (columns.size() > i ) { // we have it already
+        if (columns.size() > i) {
           String newString = columns.get(i).concat(String.valueOf(splittedString[i]));
           columns.set(i, newString);
         } else {
@@ -35,14 +75,13 @@ public class Day32021 {
         }
       }
     }
-
     return columns;
   }
 
   int getMostCommonBinaryInString(final String string) {
     String ones = string.replace("0", "");
     String zeros = string.replace("1", "");
-    if (ones.length() > zeros.length()) return 1;
+    if (ones.length() >= zeros.length()) return 1;
     else return 0;
   }
 
