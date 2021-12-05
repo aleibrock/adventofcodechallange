@@ -1,5 +1,7 @@
 package net.leibi.adventofcode2021.day3;
 
+import static net.leibi.helpers.InputHelper.getIntegerFromIntArray;
+import static net.leibi.helpers.InputHelper.getIntegerFromString;
 import static net.leibi.helpers.InputHelper.getRowListFromInput;
 
 import java.util.ArrayList;
@@ -46,10 +48,7 @@ public class Day32021 {
     return getColumnsFromRowList(getRowListFromInput(input));
   }
 
-  private int getIntegerFromString(String s) {
-    int[] intArray = Arrays.stream(s.split("")).map(Integer::valueOf).mapToInt(i -> i).toArray();
-    return getIntegerFromIntArray(intArray);
-  }
+
 
   public int getPowerConsumption(final String input) {
 
@@ -116,13 +115,5 @@ public class Day32021 {
     return getIntegerFromIntArray(gamma);
   }
 
-  int getIntegerFromIntArray(int[] intArray) {
-    int result = 0;
-    int multiplier = 1;
-    for (int i = intArray.length-1; i >= 0; --i) {
-      result += (multiplier * intArray[i]);
-      multiplier *= 2;
-    }
-    return result;
-  }
+
 }

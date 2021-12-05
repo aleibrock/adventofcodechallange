@@ -3,6 +3,7 @@ package net.leibi.adventofcode2021.day3;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import net.leibi.helpers.InputHelper;
 import org.junit.jupiter.api.Test;
 
 class Day32021Test {
@@ -63,7 +64,7 @@ class Day32021Test {
   @Test
   void getIntegerFromIntArray() {
     int[] intArray = new int[]{1,0,0,1};
-    assertThat(day32021.getIntegerFromIntArray(intArray)).isEqualTo(9);
+    assertThat(InputHelper.getIntegerFromIntArray(intArray)).isEqualTo(9);
     }
 
 
