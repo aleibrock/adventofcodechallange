@@ -1,6 +1,5 @@
 package net.leibi.adventofcode2021.day3;
 
-import static java.util.Objects.isNull;
 import static net.leibi.helpers.InputHelper.getRowListFromInput;
 
 import java.util.ArrayList;
@@ -14,7 +13,18 @@ public class Day32021 {
   }
 
   int co2ScrubberRating(String input) {
-    return 0;
+    List<String> rowList = getRowListFromInput(input);
+    List<String> columns = getColumnsFromRowList(rowList);
+
+    List<String> filteredRowList = rowList;
+    for (int i = 0; i < columns.size(); i++) {
+      columns = getColumnsFromRowList(filteredRowList);
+      int mostCommonBit = getLeastCommonBinaryInString(columns.get(i));
+      filteredRowList = getRowsWithBinaryInPosition(filteredRowList, mostCommonBit, i);
+      if (filteredRowList.size() == 1) break;
+    }
+    assert (filteredRowList.size() == 1);
+    return getIntegerFromString(filteredRowList.get(0));
   }
 
   int getOxigenGeneratorRating(String input) {

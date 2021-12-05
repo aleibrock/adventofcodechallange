@@ -15,6 +15,11 @@ class Day32021Test {
     }
 
   @Test
+  void getLifeSupportRating() {
+    assertThat(day32021.getLifeSupportRating(Input.LONG_INPUT)).isEqualTo(4203981);
+  }
+
+  @Test
   void co2ScrubberRatingShort() {
     assertThat(day32021.co2ScrubberRating(Input.SHORT_INPUT)).isEqualTo(10);
     }
