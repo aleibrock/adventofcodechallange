@@ -27,9 +27,10 @@ public class Day52021 {
   int getNumberOfBoardCellsWithScoreBiggerThan2() {
     int result = 0;
 
-    for (int i = 0; i < board.length; i++) {
+    for (int[] ints : board) {
       for (int j = 0; j < board.length; j++) {
-        if (board[i][j] > 1) result++;
+        if (ints[j] > 1)
+          result++;
       }
     }
     return result;
