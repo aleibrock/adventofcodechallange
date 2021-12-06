@@ -22,6 +22,15 @@ public class InputHelper {
   }
 
   public static int[] getIntArrayFromString(String s) {
+    return Arrays.stream(s.split(""))
+        .filter(string -> !string.isBlank())
+        .filter(string -> !string.isEmpty())
+        .map(Integer::valueOf)
+        .mapToInt(i -> i)
+        .toArray();
+  }
+
+  public static int[] getIntArrayFromStringWithSpaces(String s) {
     return Arrays.stream(s.split(" "))
         .filter(string -> !string.isBlank())
         .filter(string -> !string.isEmpty())
