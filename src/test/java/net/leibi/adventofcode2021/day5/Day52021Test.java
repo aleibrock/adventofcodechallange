@@ -27,6 +27,18 @@ class Day52021Test {
   }
 
   @Test
+  void getNumberOfBoardCellsWithScoreBiggerThan2WithDiag() {
+    Day52021 day52021 = new Day52021(Input.SHORT_INPUT, true);
+    assertThat(day52021.getNumberOfBoardCellsWithScoreBiggerThan2()).isEqualTo(12);
+  }
+
+  @Test
+  void getNumberOfBoardCellsWithScoreBiggerThan2WithDiagLong() {
+    Day52021 day52021 = new Day52021(Input.LONG_INPUT, true);
+    assertThat(day52021.getNumberOfBoardCellsWithScoreBiggerThan2()).isEqualTo(19374);
+  }
+
+  @Test
   void getNumberOfBoardCellsWithScoreBiggerThan2Long() {
     Day52021 day52021 = new Day52021(Input.LONG_INPUT);
     assertThat(day52021.getNumberOfBoardCellsWithScoreBiggerThan2()).isEqualTo(8350);

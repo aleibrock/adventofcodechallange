@@ -11,10 +11,16 @@ public class Day52021 {
 
   int[][] board;
   List<Line> lines;
+  private final boolean fillDiag;
 
   public Day52021(final String input) {
+    this(input, false);
+  }
+
+  public Day52021(final String input, boolean fillDiag) {
     this.lines = getLinesFromInput(input);
     this.board = buildBoard();
+    this.fillDiag = fillDiag;
     fillBoardByLines(lines);
   }
 
@@ -37,15 +43,62 @@ public class Day52021 {
 
   void fillBoardByLines(List<Line> lines) {
     for (Line line : lines) {
-      fillBoardByPoints(line.from, line.to);
+      fillBoardByPoints(line.from, line.to, fillDiag);
     }
   }
 
-  private void fillBoardByPoints(Point from, Point to) {
+  private void fillBoardByPoints(Point from, Point to, boolean fillDiag) {
     if (from.x == to.x) {
       fillHorizontal(from, to);
     } else if (from.y == to.y) {
       fillVertical(from, to);
+    } else if (fillDiag) {
+      fillDiagonal(from, to);
+    }
+  }
+
+  private void fillDiagonal(Point from, Point to) {
+
+    if (from.x < to.x && from.y < to.y) { // leftup to rightdown
+      fillLeftUpToRightDown(from, to);
+    } else if (from.x > to.x && from.y > to.y) { // rightup to leftDown
+      fillRightUpToLeftDown(from, to);
+    } else if (from.x > to.x && from.y < to.y) { // rightdown to leftup
+      fillRightDownToLeftUp(from, to);
+    } else if (from.x < to.x && from.y > to.y) { // leftup to rightdown
+      fillLeftDownToRightUp(from, to);
+    }
+  }
+
+  private void fillLeftDownToRightUp(Point from, Point to) {
+    int x = from.x;
+    int y = from.y;
+    while (x <= to.x && y >= to.y) {
+      board[x++][y--]++;
+    }
+  }
+
+  private void fillRightDownToLeftUp(Point from, Point to) {
+    int x = from.x;
+    int y = from.y;
+    while (x >= to.x && y <= to.y) {
+      board[x--][y++]++;
+    }
+  }
+
+  private void fillRightUpToLeftDown(Point from, Point to) {
+    int x = from.x;
+    int y = from.y;
+    while (x >= to.x && y >= to.y) {
+      board[x--][y--]++;
+    }
+  }
+
+  private void fillLeftUpToRightDown(Point from, Point to) {
+    int x = from.x;
+    int y = from.y;
+    while (x <= to.x && y <= to.y) {
+      board[x++][y++]++;
     }
   }
 
