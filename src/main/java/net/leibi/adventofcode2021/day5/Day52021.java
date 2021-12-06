@@ -5,6 +5,7 @@ import static net.leibi.helpers.InputHelper.getRowListFromInput;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.leibi.adventofcode2021.day5.Line.Point;
 
 public class Day52021 {
 
@@ -19,13 +20,25 @@ public class Day52021 {
   int[][] buildBoard() {
     assert (!isNull(lines));
     int[] maxValues = getMaxValueFromLines(lines);
-    int[][] tmpBoard = new int[maxValues[0]][maxValues[1]];
-    for (int i = 0; i < maxValues[0]; i++) {
-      for (int j = 0; j < maxValues[1]; j++) {
-        tmpBoard[i][j] = 0;
+    return new int[maxValues[0] + 1][maxValues[1] + 1];
+  }
+
+  void fillBoardByLines(List<Line> lines) {
+    for (Line line : lines) {
+      fillBoardByPoints(line.from, line.to);
+    }
+  }
+
+  private void fillBoardByPoints(Point from, Point to) {
+    if (from.x == to.x) { //
+      for (int i = from.y; i < to.y; i++) {
+        board[i][from.x]++;
+      }
+    } else if (from.y == to.y) {
+      for (int i = from.x; i < to.x; i++) {
+        board[from.y][i]++;
       }
     }
-    return tmpBoard;
   }
 
   static List<Line> getLinesFromInput(final String input) {
