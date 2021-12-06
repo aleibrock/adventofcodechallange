@@ -12,6 +12,7 @@ public class Board {
   private final int[][] boardContent;
   private final boolean[][] markedBoard = new boolean[5][5];
   private int lastNumberMarked = -1;
+  private boolean hasWon = false;
 
   public Board(final String initialContent) {
     boardContent = getBoardContent(initialContent);
@@ -55,10 +56,13 @@ public class Board {
     for (int i = 0; i < 5; i++) {
       boolean complete = isRowComplete(i);
       if (complete) {
+        hasWon = true;
         return true;
+
       }
       complete = isColumnComplete(i);
       if (complete) {
+        hasWon = true;
         return true;
       }
     }
