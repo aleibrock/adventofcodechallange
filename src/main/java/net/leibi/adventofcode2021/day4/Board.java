@@ -22,6 +22,22 @@ public class Board {
     }
   }
 
+  public int getScore() {
+    return lastNumberMarked * getSumOfUnMarkedNumbersOnBoard();
+  }
+
+  private int getSumOfUnMarkedNumbersOnBoard() {
+    int sum = 0;
+    for (int i = 0; i < 5; i++) {
+      for (int j = 0; j < 5; j++) {
+        if (!markedBoard[i][j]) {
+          sum += boardContent[i][j];
+        }
+      }
+    }
+    return sum;
+  }
+
   void markNumberOnBoard(final int number) {
     lastNumberMarked = -1;
     for (int i = 0; i < 5; i++) {
