@@ -8,7 +8,7 @@ public class Line {
   Point to;
 
   public Line(int x1, int y1, int x2, int y2) {
-    this(new Point(x1, y1), new Point(x2, y2));
+    this(new Point(y1, x1), new Point(y2, x2));
   }
 
   public Line(Point from, Point to) {

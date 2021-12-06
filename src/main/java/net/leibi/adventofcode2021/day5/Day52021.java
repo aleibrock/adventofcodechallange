@@ -15,6 +15,18 @@ public class Day52021 {
   public Day52021(final String input) {
     this.lines = getLinesFromInput(input);
     this.board = buildBoard();
+    fillBoardByLines(lines);
+  }
+
+  int getNumberOfBoardCellsWithScoreBiggerThan2() {
+    int result = 0;
+
+    for (int i = 0; i < board.length; i++) {
+      for (int j = 0; j < board.length; j++) {
+        if (board[i][j] > 1) result++;
+      }
+    }
+    return result;
   }
 
   int[][] buildBoard() {
@@ -30,13 +42,33 @@ public class Day52021 {
   }
 
   private void fillBoardByPoints(Point from, Point to) {
-    if (from.x == to.x) { //
-      for (int i = from.y; i < to.y; i++) {
-        board[i][from.x]++;
-      }
+    if (from.x == to.x) {
+      fillHorizontal(from, to);
     } else if (from.y == to.y) {
-      for (int i = from.x; i < to.x; i++) {
-        board[from.y][i]++;
+      fillVertical(from, to);
+    }
+  }
+
+  private void fillVertical(Point from, Point to) {
+    if (from.x < to.x) {
+      for (int i = from.x; i <= to.x; i++) {
+        board[i][from.y]++;
+      }
+    } else {
+      for (int i = from.x; i >= to.x; i--) {
+        board[i][from.y]++;
+      }
+    }
+  }
+
+  private void fillHorizontal(Point from, Point to) {
+    if (from.y < to.y) {
+      for (int i = from.y; i <= to.y; i++) {
+        board[from.x][i]++;
+      }
+    } else {
+      for (int i = from.y; i >= to.y; i--) {
+        board[from.x][i]++;
       }
     }
   }
@@ -65,6 +97,8 @@ public class Day52021 {
     for (Line line : lines) {
       if (line.from.x > maxX) maxX = line.from.x;
       if (line.from.y > maxY) maxY = line.from.y;
+      if (line.to.x > maxX) maxX = line.to.x;
+      if (line.to.y > maxY) maxY = line.to.y;
     }
     int[] result = new int[2];
     result[0] = maxX;
