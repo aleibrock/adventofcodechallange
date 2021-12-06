@@ -21,8 +21,8 @@ public class InputHelper {
     return getIntegerFromIntArray(intArray);
   }
 
-  public static int[] getIntArrayFromString(String s) {
-    return Arrays.stream(s.split(""))
+  public static int[] getIntArrayFromString(String s, String delimiter) {
+    return Arrays.stream(s.split(delimiter))
         .filter(string -> !string.isBlank())
         .filter(string -> !string.isEmpty())
         .map(Integer::valueOf)
@@ -30,8 +30,8 @@ public class InputHelper {
         .toArray();
   }
 
-  public static int[] getIntArrayFromStringWithSpaces(String s) {
-    return Arrays.stream(s.split(" "))
+  public static int[] getIntArrayFromString(String s) {
+    return Arrays.stream(s.split(""))
         .filter(string -> !string.isBlank())
         .filter(string -> !string.isEmpty())
         .map(Integer::valueOf)

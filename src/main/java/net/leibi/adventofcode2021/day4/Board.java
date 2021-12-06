@@ -1,6 +1,6 @@
 package net.leibi.adventofcode2021.day4;
 
-import static net.leibi.helpers.InputHelper.getIntArrayFromStringWithSpaces;
+import static net.leibi.helpers.InputHelper.getIntArrayFromString;
 
 import java.util.Arrays;
 import java.util.List;
@@ -93,7 +93,7 @@ public class Board {
 
     for (int i = 0; i < rows.size(); i++) {
       String row = rows.get(i);
-      List<Integer> rowList = Arrays.stream(getIntArrayFromStringWithSpaces(row)).boxed().toList();
+      List<Integer> rowList = Arrays.stream(getIntArrayFromString(row, " ")).boxed().toList();
       for (int j = 0; j < rowList.size(); j++) {
         intArray[i][j] = rowList.get(j);
       }
