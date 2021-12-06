@@ -38,6 +38,6 @@ class Day42021Test {
   @Test
   void testPlaytoWinLastLong() {
     Day42021 day42021 = new Day42021(Input.LONG_INPUT);
-    assertThat(day42021.play()).isEqualTo(67716);
+    assertThat(day42021.playToWinLast()).isEqualTo(1830);
   }
 }
