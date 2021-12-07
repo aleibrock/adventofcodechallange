@@ -1,7 +1,6 @@
 package net.leibi.adventofcode2021.day5;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
