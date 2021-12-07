@@ -11,8 +11,8 @@ class LineTest {
   void testCtor(){
 
     Line line = new Line(1,2,3,4);
-    assertThat(line.from).isEqualTo(new Line.Point(1,2));
-    assertThat(line.to).isEqualTo(new Line.Point(3,4));
+    assertThat(line.from).isEqualTo(new Line.Point(2,1));
+    assertThat(line.to).isEqualTo(new Line.Point(4,3));
 
   }
 
