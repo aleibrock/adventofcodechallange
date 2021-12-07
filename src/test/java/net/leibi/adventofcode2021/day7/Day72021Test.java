@@ -10,21 +10,21 @@ class Day72021Test {
 
   @Test
   void solveShort() {
-    assertThat(Day72021.solve(Input.SHORT_INPUT)).isEqualTo(37);
+    assertThat(Day72021.solve(Input.SHORT_INPUT, false)).isEqualTo(37);
   }
 
   @Test
   void solveWithIncreasingFuelShort() {
-    assertThat(Day72021.solveWithIncreasingFuel(Input.SHORT_INPUT)).isEqualTo(168);
+    assertThat(Day72021.solve(Input.SHORT_INPUT, true)).isEqualTo(168);
   }
 
   @Test
   void solveLong() {
-    assertThat(Day72021.solve(Input.LONG_INPUT)).isEqualTo(337833);
+    assertThat(Day72021.solve(Input.LONG_INPUT, false)).isEqualTo(337833);
   }
 
   @Test
   void solveLongWithIncreasingFuel() {
-    assertThat(Day72021.solveWithIncreasingFuel(Input.LONG_INPUT)).isEqualTo(96678050);
+    assertThat(Day72021.solve(Input.LONG_INPUT, true)).isEqualTo(96678050);
   }
 }
