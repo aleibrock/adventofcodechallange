@@ -41,11 +41,7 @@ public class Day72021 {
 
 
   private static int fuelforDiff(int diff) {
-    int sum = 0;
-    for (int i = 1; i <= diff; i++) {
-      sum += i;
-    }
-    return sum;
+    return diff*(1+diff)/2;
   }
 
   private static int getMaximalPosition(int[] initialPositions) {
