@@ -18,4 +18,9 @@ class Day82021Test {
   void solveShort() {
     assertThat(Day82021.solve(Input.SHORT_INPUT)).isEqualTo(26);
   }
+
+  @Test
+  void solveLong() {
+    assertThat(Day82021.solve(Input.LONG_INPUT)).isEqualTo(26);
+  }
 }
