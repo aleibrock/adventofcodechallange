@@ -5,43 +5,43 @@ import static net.leibi.helpers.InputHelper.getIntegerFromString;
 import static net.leibi.helpers.InputHelper.getRowListFromInput;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Day32021 {
+
+  int co2ScrubberRating(String input) {
+    return getRating(input, rating.CO_2);
+  }
 
   public int getLifeSupportRating(final String input) {
     return getOxigenGeneratorRating(input) * co2ScrubberRating(input);
   }
 
-  int co2ScrubberRating(String input) {
+  int getOxigenGeneratorRating(String input) {
+    return getRating(input, rating.OXIGEN);
+  }
+
+  int getRating(String input, rating rating) {
     List<String> rowList = getRowListFromInput(input);
     List<String> columns = getColumnsFromRowList(rowList);
 
     List<String> filteredRowList = rowList;
     for (int i = 0; i < columns.size(); i++) {
       columns = getColumnsFromRowList(filteredRowList);
-      int leastCommonBinaryInString = getLeastCommonBinaryInString(columns.get(i));
-      filteredRowList = getRowsWithBinaryInPosition(filteredRowList, leastCommonBinaryInString, i);
+      int mostCommonBit =
+          rating == Day32021.rating.OXIGEN
+              ? getMostCommonBinaryInString(columns.get(i))
+              : getLeastCommonBinaryInString(columns.get(i));
+      filteredRowList = getRowsWithBinaryInPosition(filteredRowList, mostCommonBit, i);
       if (filteredRowList.size() == 1) break;
     }
     assert (filteredRowList.size() == 1);
     return getIntegerFromString(filteredRowList.get(0));
   }
 
-  int getOxigenGeneratorRating(String input) {
-    List<String> rowList = getRowListFromInput(input);
-    List<String> columns = getColumnsFromRowList(rowList);
-
-    List<String> filteredRowList = rowList;
-    for (int i = 0; i < columns.size(); i++) {
-      columns = getColumnsFromRowList(filteredRowList);
-      int mostCommonBit = getMostCommonBinaryInString(columns.get(i));
-      filteredRowList = getRowsWithBinaryInPosition(filteredRowList, mostCommonBit, i);
-      if (filteredRowList.size() == 1) break;
-    }
-    assert (filteredRowList.size() == 1);
-    return getIntegerFromString(filteredRowList.get(0));
+  enum rating {
+    OXIGEN,
+    CO_2
   }
 
   List<String> getColumnsFromInput(final String input) {
