@@ -38,10 +38,10 @@ public class Day92021 {
     for (int columnCursor = 0; columnCursor < height; columnCursor++) {
       for (int rowCursor = 0; rowCursor < width; rowCursor++) {
 
-        int up = columnCursor > 0 ? matrix[columnCursor - 1][rowCursor] : 10;
-        int down = columnCursor < height - 1 ? matrix[columnCursor + 1][rowCursor] : 10;
-        int left = rowCursor > 0 ? matrix[columnCursor][rowCursor - 1] : 10;
-        int right = rowCursor < width - 1 ? matrix[columnCursor][rowCursor + 1] : 10;
+        int up = getUp(matrix, columnCursor, rowCursor);
+        int down = getDown(matrix, height, columnCursor, rowCursor);
+        int left = getLeft(matrix, columnCursor, rowCursor);
+        int right = getRight(matrix, width, columnCursor, rowCursor);
 
         if (matrix[columnCursor][rowCursor] < Math.min(Math.min(Math.min(up, down), left), right)) {
           result.add(matrix[columnCursor][rowCursor]);
@@ -49,5 +49,21 @@ public class Day92021 {
       }
     }
     return result;
+  }
+
+  private static int getRight(int[][] matrix, int width, int columnCursor, int rowCursor) {
+    return rowCursor < width - 1 ? matrix[columnCursor][rowCursor + 1] : 10;
+  }
+
+  private static int getLeft(int[][] matrix, int columnCursor, int rowCursor) {
+    return rowCursor > 0 ? matrix[columnCursor][rowCursor - 1] : 10;
+  }
+
+  private static int getDown(int[][] matrix, int height, int columnCursor, int rowCursor) {
+    return columnCursor < height - 1 ? matrix[columnCursor + 1][rowCursor] : 10;
+  }
+
+  private static int getUp(int[][] matrix, int columnCursor, int rowCursor) {
+    return columnCursor > 0 ? matrix[columnCursor - 1][rowCursor] : 10;
   }
 }
