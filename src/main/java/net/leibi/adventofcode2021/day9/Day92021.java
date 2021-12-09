@@ -38,27 +38,13 @@ public class Day92021 {
     for (int columnCursor = 0; columnCursor < height; columnCursor++) {
       for (int rowCursor = 0; rowCursor < width; rowCursor++) {
 
-        int up = 10;
-        int down = 10;
-        int left = 10;
-        int right = 10;
+        int up = columnCursor > 0 ? matrix[columnCursor - 1][rowCursor] : 10;
+        int down = columnCursor < height - 1 ? matrix[columnCursor + 1][rowCursor] : 10;
+        int left = rowCursor > 0 ? matrix[columnCursor][rowCursor - 1] : 10;
+        int right = rowCursor < width - 1 ? matrix[columnCursor][rowCursor + 1] : 10;
 
-        int currentValue = matrix[columnCursor][rowCursor];
-        if (columnCursor > 0) {
-          up = matrix[columnCursor - 1][rowCursor];
-        }
-        if (columnCursor < height - 1) {
-          down = matrix[columnCursor + 1][rowCursor];
-        }
-        if (rowCursor < width - 1) {
-          right = matrix[columnCursor][rowCursor + 1];
-        }
-        if (rowCursor > 0) {
-          left = matrix[columnCursor][rowCursor - 1];
-        }
-
-        if (currentValue < Math.min(Math.min(Math.min(up, down), left), right)) {
-          result.add(currentValue);
+        if (matrix[columnCursor][rowCursor] < Math.min(Math.min(Math.min(up, down), left), right)) {
+          result.add(matrix[columnCursor][rowCursor]);
         }
       }
     }
