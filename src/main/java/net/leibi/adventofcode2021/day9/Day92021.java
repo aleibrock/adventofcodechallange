@@ -43,9 +43,7 @@ public class Day92021 {
     int currentRow = lowPoint.row + 1;
     int currentCol = lowPoint.column;
     while (currentRow < width) {
-      if (reachedANine(matrix, currentCol, currentRow, nextPoints, lowPoint, basin)) {
-        break;
-      }
+      if (reachedANine(matrix, currentCol, currentRow, nextPoints, lowPoint, basin)) break;
       currentRow++;
     }
     // left
