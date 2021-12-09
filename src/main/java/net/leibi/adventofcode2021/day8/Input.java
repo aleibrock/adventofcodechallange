@@ -20,6 +20,10 @@ public class Input {
       """;
 
 
+  public static final String SHORT_INPUT_ONE_LINE = """
+     acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab |  cdfeb fcadb cdfeb cdbaf
+  """;
+
   public static final String LONG_INPUT = """
       dcagfb cbegda cabdf bagedf dcb cd dcbegaf aebcf bgdaf dgcf | dacebgf cbafd dbacf cdgf
       dfgbc ceagbd egb cgdae eafcgd ecbgd eb aefbgcd bfaceg deba | baed ecabgd aebd cadfebg
