@@ -85,8 +85,6 @@ public class Day102021 {
       if (isOpeningChar(ch)) {
         openingChars.add(ch);
       } else {
-        // so we have a closing char
-        // it has to match the last openingChar
         if (isCounterPart(openingChars.get(openingChars.size() - 1), ch)) {
           openingChars.remove(openingChars.size() - 1);
         } else {
@@ -95,7 +93,6 @@ public class Day102021 {
       }
     }
     return "";
-
   }
 
   static int getScoreForIncompleteChar(String ch) {
