@@ -20,17 +20,23 @@ public class Day102021 {
     List<Integer> scoreList =
         InputHelper.getRowListFromInput(input).stream()
             .map(Day102021::getCompletionString)
-            .mapToInt(Day102021::getScoreForCompletingString)
+            .map(Day102021::getScoreForCompletingString)
+            .mapToInt(i->i)
             .filter(i -> i > 0)
             .boxed()
             .sorted()
             .toList();
+
+    for (int i = 1; i < scoreList.size(); i++) {
+      assert(scoreList.get(i) > scoreList.get(i-1));
+    }
 
     // get the middle score
     return scoreList.get(scoreList.size()/2);
   }
 
   static int getScoreForCompletingString(String input) {
+    if(input.isBlank()) return -1;
     int sum = 0;
     for (String ch : input.split("")) {
       sum *= 5;
@@ -40,7 +46,6 @@ public class Day102021 {
   }
 
   static String getCompletionString(String input){
-
     StringBuilder result = new StringBuilder();
     List<String> openingChars = new ArrayList<>();
     if(getFirstWrongCharOrFilOpeningChars(input,openingChars).equals("")){
