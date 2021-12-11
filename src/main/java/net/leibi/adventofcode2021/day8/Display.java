@@ -9,11 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 
 @Getter
+@Slf4j
 public class Display {
 
   List<String> patterns;
@@ -113,9 +116,6 @@ public class Display {
           return i;
         }
       }
-    }else{
-      // we have to find the pattern in a better way
-
     }
 
     return -1;
@@ -149,13 +149,52 @@ public class Display {
         }
       }
 
-
-
     for (int i = currentConfiguration.length - 1; i >= 0; i--) {
       if(isNotNullOrEmpty(currentConfiguration[i])){
         mapPatternToDefault.put(currentConfiguration[i], getCharForIndex(i));
       }
     }
+    for (String pattern : patterns) {
+      if(mapPatternToDefault.size() == 7) break;
+      String[] patternArray = pattern.split("");
+      for (String[] globalPattern : allPattern) {
+        String[] targetPattern = convertPattern(globalPattern);
+        if(patternMatch(patternArray,targetPattern)){
+            // match found
+            log.info(" {} and {} match! which means it should be {}", patternArray, targetPattern, globalPattern);
+           for (int j = 0; j < patternArray.length; j++) {
+             if(!mapPatternToDefault.containsKey(patternArray[j])){
+               mapPatternToDefault.put(patternArray[j],globalPattern[j]);
+             }
+           }
+          }
+        }
+      }
+    assert(mapPatternToDefault.size() == 7);
+
+  }
+
+  private boolean patternMatch(String[] patternArray, String[] targetPattern) {
+    boolean res = patternArray.length == targetPattern.length;
+    if(res){
+      // does the patternArray Contain all non-null values from targetPattern?
+      for (int i = 0; i < targetPattern.length; i++) {
+        int finalI = i;
+        res = res && (isNull(targetPattern[i]) || Arrays.stream(patternArray).anyMatch(p -> Objects.equals(
+            p, targetPattern[finalI])));
+        if(!res) return false;
+      }
+    }
+    return res;
+  }
+
+  private String[] convertPattern(String[] inputPattern) {
+    String[] result = new String[inputPattern.length];
+    for (int i = 0; i < inputPattern.length; i++) {
+      int finalI = i;
+      result[i]= mapPatternToDefault.entrySet().stream().filter(entry -> entry.getValue().equals(inputPattern[finalI])).map(Map.Entry::getKey).findFirst().orElse(null);
+    }
+    return result;
   }
 
   @SneakyThrows

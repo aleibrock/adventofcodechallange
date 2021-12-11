@@ -49,9 +49,9 @@ public class Day82021 {
   static int getOutputForDisplay(final Display display) {
     int result = 0;
     List<Integer> outPutDigits = display.getOutputDigits();
-    for (int i = 0; i < outPutDigits.size(); i++) {
+    for (Integer outPutDigit : outPutDigits) {
       result *= 10;
-      result += outPutDigits.get(i);
+      result += outPutDigit;
     }
     return result;
   }
