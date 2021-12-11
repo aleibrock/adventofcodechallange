@@ -17,7 +17,11 @@ class Day102021Test {
 
   @Test
   void solveFirstPartShort() {
-
     assertThat(Day102021.solveFirstPart(Input.SHORT_INPUT)).isEqualTo(26397);
+  }
+
+  @Test
+  void solveFirstPartLong() {
+    assertThat(Day102021.solveFirstPart(Input.LONG_INPUT)).isEqualTo(315693);
   }
 }
