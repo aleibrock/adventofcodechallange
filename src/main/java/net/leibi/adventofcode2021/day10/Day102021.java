@@ -2,8 +2,11 @@ package net.leibi.adventofcode2021.day10;
 
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import net.leibi.helpers.InputHelper;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Day102021 {
 
   static int solveFirstPart(final String input) {
