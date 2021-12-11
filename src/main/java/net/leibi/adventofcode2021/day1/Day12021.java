@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Day12021 {
 
-  public static int getNumberOfEncreases(final String input) {
+  public static int getNumberOfIncreases(final String input) {
     List<Integer> inputList = getIntegerListFromInput(input);
     int cnt = 0;
     for (int i = 0; i < inputList.size(); i++) {
@@ -20,7 +20,7 @@ public class Day12021 {
     return cnt;
   }
 
-  public static int getNumberOfEncreasesWithSlidingWindow(final String input) {
+  public static int getNumberOfIncreasesWithSlidingWindow(final String input) {
     List<Integer> inputList = getIntegerListFromInput(input);
     int cnt = 0;
     for (int i = 0; i < inputList.size(); i++) {

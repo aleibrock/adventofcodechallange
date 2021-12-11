@@ -8,21 +8,21 @@ class Day12021Test {
 
   @Test
   void getNumberOfEncreasesWithSlidingWindowShort() {
-    assertThat(Day12021.getNumberOfEncreasesWithSlidingWindow(Input.SHORT_INPUT)).isEqualTo(5);
+    assertThat(Day12021.getNumberOfIncreasesWithSlidingWindow(Input.SHORT_INPUT)).isEqualTo(5);
   }
 
   @Test
   void getNumberOfEncreasesWithSlidingWindow() {
-    assertThat(Day12021.getNumberOfEncreasesWithSlidingWindow(Input.LONG_INPUT)).isEqualTo(1600);
+    assertThat(Day12021.getNumberOfIncreasesWithSlidingWindow(Input.LONG_INPUT)).isEqualTo(1600);
   }
 
   @Test
   void getNumberOfEncreasesShort() {
-    assertThat(Day12021.getNumberOfEncreases(Input.SHORT_INPUT)).isEqualTo(7);
+    assertThat(Day12021.getNumberOfIncreases(Input.SHORT_INPUT)).isEqualTo(7);
   }
 
   @Test
   void getNumberOfEncreases() {
-    assertThat(Day12021.getNumberOfEncreases(Input.LONG_INPUT)).isEqualTo(1559);
+    assertThat(Day12021.getNumberOfIncreases(Input.LONG_INPUT)).isEqualTo(1559);
   }
 }
