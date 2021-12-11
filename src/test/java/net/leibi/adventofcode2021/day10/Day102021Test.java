@@ -2,6 +2,7 @@ package net.leibi.adventofcode2021.day10;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class Day102021Test {
@@ -49,6 +50,7 @@ class Day102021Test {
   }
 
   @Test
+  @Disabled
   void solveSecondPartLong() {
     assertThat(Day102021.solveSecondPart(Input.LONG_INPUT)).isEqualTo(288957);
   }
