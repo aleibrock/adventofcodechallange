@@ -7,6 +7,15 @@ import org.junit.jupiter.api.Test;
 class Day102021Test {
 
   @Test
+  void getCompletionString() {
+    assertThat(Day102021.getCompletionString("[({(<(())[]>[[{[]{<()<>>")).isEqualTo("}}]])})]");
+    assertThat(Day102021.getCompletionString("[(()[<>])]({[<{<<[]>>(")).isEqualTo(")}>]})");
+    assertThat(Day102021.getCompletionString("(((({<>}<{<{<>}{[]{[]{}")).isEqualTo("}}>}>))))");
+    assertThat(Day102021.getCompletionString("{<[[]]>}<{[{[{[]{()[[[]")).isEqualTo("]]}}]}]}>");
+    assertThat(Day102021.getCompletionString("<{([{{}}[<[[[<>{}]]]>[]]")).isEqualTo("])}>");
+  }
+
+  @Test
   void getConflictingChar_SingeLines() {
     assertThat(Day102021.getFirstWrongChar(Input.SHORT_INPUT_LINE1)).isEqualTo("}");
     assertThat(Day102021.getFirstWrongChar(Input.SHORT_INPUT_LINE2)).isEqualTo(")");
