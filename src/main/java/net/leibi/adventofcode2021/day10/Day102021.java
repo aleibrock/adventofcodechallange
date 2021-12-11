@@ -16,18 +16,49 @@ public class Day102021 {
         .sum();
   }
 
+  static int solveSecondPart(final String input) {
+    List<Integer> scoreList =
+        InputHelper.getRowListFromInput(input).stream()
+            .map(Day102021::getCompletionString)
+            .mapToInt(Day102021::getScoreForCompletingString)
+            .filter(i -> i > 0)
+            .boxed()
+            .sorted()
+            .toList();
+
+    // get the middle score
+    return scoreList.get(scoreList.size()/2);
+  }
+
+  static int getScoreForCompletingString(String input) {
+    int sum = 0;
+    for (String ch : input.split("")) {
+      sum *= 5;
+      sum += getScoreForCompletionChar(ch);
+    }
+    return sum;
+  }
+
   static String getCompletionString(String input){
 
-    String result = "";
+    StringBuilder result = new StringBuilder();
     List<String> openingChars = new ArrayList<>();
     if(getFirstWrongCharOrFilOpeningChars(input,openingChars).equals("")){
-
       for (int i = openingChars.size() - 1; i >= 0; i--) {
-        result += getCounterPart(openingChars.get(i));
+        result.append(getCounterPart(openingChars.get(i)));
       }
     }
 
-    return result;
+    return result.toString();
+  }
+
+  private static int getScoreForCompletionChar(String ch) {
+    if (ch.equals(")")) return 1;
+    if (ch.equals("]")) return 2;
+    if (ch.equals("}")) return 3;
+    if (ch.equals(">")) return 4;
+
+    return 0;
   }
 
   private static String getCounterPart(String s) {
@@ -45,7 +76,6 @@ public class Day102021 {
   }
 
   static String getFirstWrongCharOrFilOpeningChars(final String input, List<String> openingChars){
-
     for (String ch : input.split("")) {
       if (isOpeningChar(ch)) {
         openingChars.add(ch);
