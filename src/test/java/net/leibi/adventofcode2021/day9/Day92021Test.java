@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 import net.leibi.adventofcode2021.day9.Day92021.LowPoint;
+import net.leibi.helpers.InputHelper;
 import org.junit.jupiter.api.Test;
 
 class Day92021Test {
@@ -22,7 +23,7 @@ class Day92021Test {
   @Test
   void getBasinForLowPoint() {
 
-    int[][] matrix = Day92021.parseInput(Input.SHORT_INPUT);
+    int[][] matrix = InputHelper.getIntMatrixFromInput(Input.SHORT_INPUT);
     List<LowPoint> lowPoints = Day92021.getLowPoints(matrix);
     List<LowPoint> basin = new ArrayList<>();
     assertThat(Day92021.getBasinForLowPoint(matrix,lowPoints.get(0), basin)).hasSize(3);//.contains(2,1,3);
@@ -47,7 +48,7 @@ class Day92021Test {
 
   @Test
   void getLowPoints() {
-    int[][] matrix = Day92021.parseInput(Input.SHORT_INPUT);
+    int[][] matrix = InputHelper.getIntMatrixFromInput(Input.SHORT_INPUT);
     List<LowPoint> lowPoints = Day92021.getLowPoints(matrix);
 
     assertThat(lowPoints)
@@ -58,7 +59,7 @@ class Day92021Test {
   @Test
   void parseInput() {
 
-    int[][] matrix = Day92021.parseInput(Input.SHORT_INPUT);
+    int[][] matrix = InputHelper.getIntMatrixFromInput(Input.SHORT_INPUT);
     assertThat(matrix).hasDimensions(5,10);
     assertThat(matrix[0][0]).isEqualTo(2);
     assertThat(matrix[4][9]).isEqualTo(8);

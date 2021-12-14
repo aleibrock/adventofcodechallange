@@ -48,4 +48,17 @@ public class InputHelper {
     }
     return result;
   }
+
+
+  public static int[][] getIntMatrixFromInput(String input){
+    List<String> rowList = InputHelper.getRowListFromInput(input);
+    int[][] result = new int[rowList.size()][rowList.get(0).length()];
+
+    int currentRow = 0;
+    for (String s : rowList) {
+      int[] row = InputHelper.getIntArrayFromString(s);
+      result[currentRow++] = row;
+    }
+    return result;
+  }
 }

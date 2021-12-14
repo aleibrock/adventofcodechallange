@@ -14,7 +14,7 @@ public class Day92021 {
 
   static int solveBonus(final String input) {
 
-    int[][] matrix = Day92021.parseInput(input);
+    int[][] matrix = InputHelper.getIntMatrixFromInput(input);
     List<LowPoint> lowpoints = getLowPoints(matrix);
 
     List<LowPoint> basin = new ArrayList<>();
@@ -101,22 +101,11 @@ public class Day92021 {
 
   static int solve(final String input) {
 
-    List<LowPoint> lowpoints = getLowPoints(parseInput(input));
+    List<LowPoint> lowpoints = getLowPoints(InputHelper.getIntMatrixFromInput(input));
     return lowpoints.size() + lowpoints.stream().mapToInt(i -> i.value).sum();
   }
 
-  static int[][] parseInput(final String input) {
 
-    List<String> rowList = InputHelper.getRowListFromInput(input);
-    int[][] result = new int[rowList.size()][rowList.get(0).length()];
-
-    int currentRow = 0;
-    for (String s : rowList) {
-      int[] row = InputHelper.getIntArrayFromString(s);
-      result[currentRow++] = row;
-    }
-    return result;
-  }
 
   private static boolean reachedANine(
       int[][] matrix,
