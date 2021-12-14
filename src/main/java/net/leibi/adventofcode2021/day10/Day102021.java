@@ -1,5 +1,6 @@
 package net.leibi.adventofcode2021.day10;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
@@ -17,30 +18,25 @@ public class Day102021 {
   }
 
   static int solveSecondPart(final String input) {
-    List<Integer> scoreList =
+    List<BigInteger> scoreList =
         InputHelper.getRowListFromInput(input).stream()
             .map(Day102021::getCompletionString)
+            .filter(string -> !string.isBlank())
             .map(Day102021::getScoreForCompletingString)
-            .mapToInt(i->i)
-            .filter(i -> i > 0)
-            .boxed()
+            .filter(i -> i.compareTo(BigInteger.ZERO) > 0)
             .sorted()
             .toList();
 
-    for (int i = 1; i < scoreList.size(); i++) {
-      assert(scoreList.get(i) > scoreList.get(i-1));
-    }
-
-    // get the middle score
-    return scoreList.get(scoreList.size()/2);
+     // get the middle score
+    return scoreList.get(scoreList.size()/2).intValue();
   }
 
-  static int getScoreForCompletingString(String input) {
-    if(input.isBlank()) return -1;
-    int sum = 0;
+  static BigInteger getScoreForCompletingString(String input) {
+    if(input.isBlank()) return BigInteger.valueOf(-1);
+    BigInteger sum = BigInteger.ZERO;
     for (String ch : input.split("")) {
-      sum *= 5;
-      sum += getScoreForCompletionChar(ch);
+      sum = sum.multiply( BigInteger.valueOf(5));
+      sum = sum.add(getScoreForCompletionChar(ch));
     }
     return sum;
   }
@@ -57,13 +53,13 @@ public class Day102021 {
     return result.toString();
   }
 
-  private static int getScoreForCompletionChar(String ch) {
-    if (ch.equals(")")) return 1;
-    if (ch.equals("]")) return 2;
-    if (ch.equals("}")) return 3;
-    if (ch.equals(">")) return 4;
+  private static BigInteger getScoreForCompletionChar(String ch) {
+    if (ch.equals(")")) return BigInteger.valueOf(1);
+    if (ch.equals("]")) return BigInteger.valueOf(2);
+    if (ch.equals("}")) return BigInteger.valueOf(3);
+    if (ch.equals(">")) return BigInteger.valueOf(4);
 
-    return 0;
+    return BigInteger.ZERO;
   }
 
   private static String getCounterPart(String s) {
@@ -81,6 +77,7 @@ public class Day102021 {
   }
 
   static String getFirstWrongCharOrFilOpeningChars(final String input, List<String> openingChars){
+    assert(openingChars.isEmpty());
     for (String ch : input.split("")) {
       if (isOpeningChar(ch)) {
         openingChars.add(ch);
