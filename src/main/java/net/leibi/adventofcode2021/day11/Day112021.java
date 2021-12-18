@@ -17,21 +17,52 @@ public class Day112021 {
     matrix = InputHelper.getIntMatrixFromInput(input);
   }
 
+
+  public int getFlashesForSteps(int steps){
+   for (int i = 0; i < steps; i++) {
+      getNextStep();
+    }
+    return flashes;
+  }
+
   void getNextStep() {
     hasFlased.clear();
     for (int currentColumn = 0; currentColumn < matrix.length; currentColumn++) {
       for (int currentRow = 0; currentRow < matrix[currentColumn].length; currentRow++) {
-        matrix[currentColumn][currentRow]++;
-        if (matrix[currentColumn][currentRow] > 9) {
-          increaseCell(currentColumn, currentRow);
-        }
+        increaseEngergyAt(currentColumn, currentRow);
       }
+    }
+
+    for (int currentColumn = 0; currentColumn < matrix.length; currentColumn++) {
+      for (int currentRow = 0; currentRow < matrix[currentColumn].length; currentRow++) {
+        flashCell(currentColumn, currentRow);
+      }
+    }
+
+    setFlashedToZero();
+
+
+  }
+
+  private void setFlashedToZero() {
+    for (Point point : hasFlased) {
+      matrix[point.column][point.row] = 0;
     }
   }
 
+  private void flashCell(int currentColumn, int currentRow) {
+    if (matrix[currentColumn][currentRow] > 9) {
+      increaseCell(currentColumn, currentRow);
+    }
+  }
+
+  private void increaseEngergyAt(int currentColumn, int currentRow) {
+    matrix[currentColumn][currentRow]++;
+  }
+
   private void increaseCell(int currentColumn, int currentRow) {
-    if (currentColumn > matrix.length || currentColumn < 0) return;
-    if (currentRow > matrix[currentColumn].length || currentRow < 0) return;
+    if (currentColumn >= matrix.length || currentColumn < 0) return;
+    if (currentRow >= matrix[currentColumn].length || currentRow < 0) return;
     Point currentPoint = new Point(currentColumn, currentRow);
     if (hasFlased.contains(currentPoint)) return;
 
@@ -39,7 +70,6 @@ public class Day112021 {
     if (matrix[currentColumn][currentRow] > 9) {
       flashes++;
       hasFlased.add(currentPoint);
-      matrix[currentColumn][currentRow] = 0;
       increaseCell(currentColumn - 1, currentRow);
       increaseCell(currentColumn + 1, currentRow);
       increaseCell(currentColumn - 1, currentRow - 1);
@@ -47,11 +77,11 @@ public class Day112021 {
       increaseCell(currentColumn, currentRow + 1);
       increaseCell(currentColumn, currentRow - 1);
       increaseCell(currentColumn + 1, currentRow - 1);
-      increaseCell(currentColumn - 1, currentRow + 1);
+      increaseCell(currentColumn + 1, currentRow + 1);
     }
   }
 
-  class Point {
+  static class Point {
     int column;
     int row;
 
