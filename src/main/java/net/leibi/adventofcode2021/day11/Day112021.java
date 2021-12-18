@@ -25,6 +25,18 @@ public class Day112021 {
     return flashes;
   }
 
+  public int getStepWhereAllFlashes() {
+
+    int numberCells = matrix.length * matrix[matrix.length - 1].length;
+
+    int stepCount = 0;
+    while (true) {
+      stepCount++;
+      getNextStep();
+      if (hasFlased.size() == numberCells) return stepCount;
+    }
+  }
+
   void getNextStep() {
     hasFlased.clear();
     for (int currentColumn = 0; currentColumn < matrix.length; currentColumn++) {
@@ -40,8 +52,6 @@ public class Day112021 {
     }
 
     setFlashedToZero();
-
-
   }
 
   private void setFlashedToZero() {

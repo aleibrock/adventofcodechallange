@@ -7,6 +7,20 @@ import org.junit.jupiter.api.Test;
 class Day112021Test {
 
   @Test
+  void getStepWhereAllFlashes_SHORT() {
+
+    Day112021 day112021 = new Day112021(Input.SHORT_INPUT);
+    assertThat(day112021.getStepWhereAllFlashes()).isEqualTo(195);
+  }
+
+  @Test
+  void getStepWhereAllFlashes_PUZZLE() {
+
+    Day112021 day112021 = new Day112021(Input.PUZZLE_INPUT);
+    assertThat(day112021.getStepWhereAllFlashes()).isEqualTo(519);
+  }
+
+  @Test
   void getFlashesForSteps_Tiny() {
 
     Day112021 day112021 = new Day112021(Input.TINY_INPUT);
