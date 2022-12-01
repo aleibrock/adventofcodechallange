@@ -1,5 +1,9 @@
 package net.leibi.adventofcode2021.day12;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Input {
 
   public static final String SHORT_INPUT =
