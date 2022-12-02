@@ -9,15 +9,16 @@ import lombok.Getter;
 @Getter
 public class Board {
 
+  public static final int BOARDSIZE = 5;
   private final int[][] boardContent;
-  private final boolean[][] markedBoard = new boolean[5][5];
+  private final boolean[][] markedBoard = new boolean[BOARDSIZE][BOARDSIZE];
   private int lastNumberMarked = -1;
   private boolean hasWon = false;
 
   public Board(final String initialContent) {
     boardContent = getBoardContent(initialContent);
-    for (int i = 0; i < 5; i++) {
-      for (int j = 0; j < 5; j++) {
+    for (int i = 0; i < BOARDSIZE; i++) {
+      for (int j = 0; j < BOARDSIZE; j++) {
         markedBoard[i][j] = false;
       }
     }
@@ -29,8 +30,8 @@ public class Board {
 
   private int getSumOfUnMarkedNumbersOnBoard() {
     int sum = 0;
-    for (int i = 0; i < 5; i++) {
-      for (int j = 0; j < 5; j++) {
+    for (int i = 0; i < BOARDSIZE; i++) {
+      for (int j = 0; j < BOARDSIZE; j++) {
         if (!markedBoard[i][j]) {
           sum += boardContent[i][j];
         }
@@ -41,8 +42,8 @@ public class Board {
 
   void markNumberOnBoard(final int number) {
     lastNumberMarked = -1;
-    for (int i = 0; i < 5; i++) {
-      for (int j = 0; j < 5; j++) {
+    for (int i = 0; i < BOARDSIZE; i++) {
+      for (int j = 0; j < BOARDSIZE; j++) {
         if (boardContent[i][j] == number) {
           markedBoard[i][j] = true;
           lastNumberMarked = number;
@@ -53,7 +54,7 @@ public class Board {
 
   boolean isBoardWinning() {
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < BOARDSIZE; i++) {
       boolean complete = isRowComplete(i);
       if (complete) {
         hasWon = true;
@@ -87,9 +88,9 @@ public class Board {
 
   private int[][] getBoardContent(String initialContent) {
 
-    int[][] intArray = new int[5][5];
+    int[][] intArray = new int[BOARDSIZE][BOARDSIZE];
     List<String> rows = Arrays.stream(initialContent.split("\\r?\\n")).toList();
-    assert (rows.size() == 5);
+    assert (rows.size() == BOARDSIZE);
 
     for (int i = 0; i < rows.size(); i++) {
       String row = rows.get(i);
