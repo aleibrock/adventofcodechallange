@@ -11,6 +11,17 @@ class Day12022Test {
     assertThat(Day12022.getMostCalories(Input.content.small())).isEqualTo(24000);
   }
 
+
+  @Test
+  void getCaloriesTopThreeElfesSmall() {
+    assertThat(Day12022.getCaloriesTopThreeElfes(Input.content.small())).isEqualTo(45000);
+  }
+
+  @Test
+  void getCaloriesTopThreeElfesLarge() {
+    assertThat(Day12022.getCaloriesTopThreeElfes(Input.content.large())).isEqualTo(204837);
+  }
+
   @Test
   void getMostCaloriesLage() {
     assertThat(Day12022.getMostCalories(Input.content.large())).isEqualTo(68442);

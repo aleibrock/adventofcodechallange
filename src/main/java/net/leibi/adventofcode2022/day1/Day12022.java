@@ -17,6 +17,14 @@ public class Day12022 {
         .orElse(0);
   }
 
+  public static Integer getCaloriesTopThreeElfes(@NonNull final String input) {
+    return getElfesFromInput(input).stream().map(Elf::totalCalories)
+        .sorted((i1, i2) -> Integer.compare(i2,i1))
+        .limit(3)
+        .reduce(0,Integer::sum);
+
+  }
+
   static List<Elf> getElfesFromInput(@NonNull final String input) {
     List<String> substrings = Arrays.stream(input.split("\\n\\n")).toList();
     return getElfesFromStringslist(substrings);
