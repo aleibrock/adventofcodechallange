@@ -24,12 +24,13 @@ public class Day22022 {
     }
     return result;
   }
-  static List<Pairing> equivalents = List.of(new Pairing("A", "X"),
+  static List<Pairing> equivalents = List.of(
+      new Pairing("A", "X"),
       new Pairing("B", "Y"),
       new Pairing("C", "Z")
   );
 
-  static Map<String, String> beats = Map.of(
+  private static final Map<String, String> beats = Map.of(
       "C", "Y",  //Scissors ->  Paper
       "B", "X",     //Paper -> Rock
       "A", "Z",     // Rock -> Scissors
@@ -37,13 +38,13 @@ public class Day22022 {
       "Y", "A",     // Paper -> Rock
       "Z", "B");     // Scissors -> Paper
 
-  public static final int WIN_VALUE = 6;
-  public static final int DRAW_VALUE = 3;
+  private static final int WIN_VALUE = 6;
+  private static final int DRAW_VALUE = 3;
   private record Pairing(String opponent, String me) {
     public Integer score() {
-      Integer WIN_VALUE1 = innerScore(result(), me);
-      if (WIN_VALUE1 != null) {
-        return WIN_VALUE1;
+      Integer innerScore = innerScore(result(), me);
+      if (innerScore != null) {
+        return innerScore;
       }
       throw new RuntimeException("Could not get score");
     }
