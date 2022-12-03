@@ -45,29 +45,28 @@ public class Day32022 {
   record Group(Rucksack r1, Rucksack r2, Rucksack r3) {
 
     public Character getCommonItem() {
-      int l1 = r1.content.length();
-      int l2 = r2.content.length();
-      int l3 = r3.content.length();
-
-      int maxLength = max(l1, l2, l3);
-      Rucksack rMax = null;
-      if (l1 == maxLength) {
-        rMax = r1;
-      } else if (l2 == maxLength) {
-        rMax = r2;
-      } else {
-        rMax = r3;
-      }
-
-      for (int i = 0; i < maxLength; i++) {
+      Rucksack rMax = getBiggestRucksack();
+      for (int i = 0; i < rMax.content.length(); i++) {
         char ch = rMax.content.charAt(i);
         if (r1.content.indexOf(ch) != -1 && r2.content.indexOf(ch) != -1
             && r3.content.indexOf(ch) != -1) {
           return ch;
         }
-
       }
       return null;
+    }
+
+    private Rucksack getBiggestRucksack() {
+      int maxLength = max(r1.content.length(), r2.content.length(), r3.content.length());
+      Rucksack rMax = null;
+      if (r1.content.length() == maxLength) {
+        rMax = r1;
+      } else if (r2.content.length() == maxLength) {
+        rMax = r2;
+      } else {
+        rMax = r3;
+      }
+      return rMax;
     }
   }
 
