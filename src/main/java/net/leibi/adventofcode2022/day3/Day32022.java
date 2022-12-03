@@ -8,7 +8,6 @@ import java.util.List;
 
 public class Day32022 {
 
-
   static Integer score(String input) {
     return getRucksackListFromInput(input).stream()
         .map(Rucksack::getCommonItems)
@@ -19,8 +18,10 @@ public class Day32022 {
   }
 
   static Integer scorePart2(String input) {
-    List<Group> groups = getListOfGroups(input);
-    return groups.stream().map(Group::getCommonItem).map(Day32022::getValueFromItem).reduce(0,Integer::sum);
+    return getListOfGroups(input).stream()
+        .map(Group::getCommonItem)
+        .map(Day32022::getValueFromItem)
+        .reduce(0, Integer::sum);
   }
 
   static List<Rucksack> getRucksackListFromInput(final String input) {
@@ -50,17 +51,18 @@ public class Day32022 {
 
       int maxLength = max(l1, l2, l3);
       Rucksack rMax = null;
-      if(l1 == maxLength)
+      if (l1 == maxLength) {
         rMax = r1;
-      else if(l2 == maxLength)
+      } else if (l2 == maxLength) {
         rMax = r2;
-      else
+      } else {
         rMax = r3;
-
+      }
 
       for (int i = 0; i < maxLength; i++) {
         char ch = rMax.content.charAt(i);
-        if (r1.content.indexOf(ch) != -1 && r2.content.indexOf(ch) != -1 && r3.content.indexOf(ch) != -1) {
+        if (r1.content.indexOf(ch) != -1 && r2.content.indexOf(ch) != -1
+            && r3.content.indexOf(ch) != -1) {
           return ch;
         }
 
@@ -88,5 +90,4 @@ public class Day32022 {
     }
 
   }
-
 }
