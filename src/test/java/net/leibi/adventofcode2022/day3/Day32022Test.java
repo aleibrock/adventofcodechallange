@@ -9,8 +9,13 @@ class Day32022Test {
 
 
   @Test
-  void score() {
+  void scoreSmall() {
     assertThat(Day32022.score(Input.small)).isEqualTo(157);
+  }
+
+  @Test
+  void scoreLarge() {
+    assertThat(Day32022.score(Input.large)).isEqualTo(7446);
   }
 
   @Test
