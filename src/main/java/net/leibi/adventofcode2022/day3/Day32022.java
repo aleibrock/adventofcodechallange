@@ -9,8 +9,9 @@ public class Day32022 {
   static Integer score(String input) {
     return getRucksackListFromInput(input).stream()
         .map(Rucksack::getCommonItems)
-        .map(
-            commonItems -> commonItems.stream().map(Day32022::getValueFromItem).reduce(0, Integer::sum))
+        .map(commonItems -> commonItems.stream()
+            .map(Day32022::getValueFromItem)
+            .reduce(0, Integer::sum))
         .reduce(0, Integer::sum);
   }
 
