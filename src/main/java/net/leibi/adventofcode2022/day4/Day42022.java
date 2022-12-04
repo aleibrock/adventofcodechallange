@@ -11,6 +11,10 @@ public class Day42022 {
     return getListOfPairs(input).stream().filter(ElfePair::hasCompleteOverlap).count();
   }
 
+  static long getPartialOverlaps(final String input){
+    return getListOfPairs(input).stream().filter(ElfePair::hasPartialOverlap).count();
+  }
+
   static List<ElfePair> getListOfPairs(final String input) {
     return InputHelper.getRowListFromInput(input).stream().map(s -> s.split(","))
         .map(a -> new ElfePair(a[0], a[1])).toList();
@@ -18,6 +22,14 @@ public class Day42022 {
   }
 
   record ElfePair(List<Integer> firstSection, List<Integer> secondSection) {
+
+    public boolean hasPartialOverlap() {
+      if(hasCompleteOverlap())
+        return true;
+
+      return firstSection.stream().filter(i -> secondSection.contains(i)).count() > 0;
+
+    }
 
     Boolean hasCompleteOverlap(){
       return firstSection.containsAll(secondSection) || secondSection.containsAll(firstSection);

@@ -19,7 +19,17 @@ class Day42022Test {
   }
 
   @Test
-  void hasOverLap(){
+  void getPartialOverlapsSmall(){
+    assertThat(Day42022.getPartialOverlaps(Input.small)).isEqualTo(4);
+  }
+
+  @Test
+  void getPartialOverlapsLarge(){
+    assertThat(Day42022.getPartialOverlaps(Input.large)).isEqualTo(837);
+  }
+
+  @Test
+  void hasCompleteOverlap(){
 
     assertThat(new ElfePair("2-4","6-8").hasCompleteOverlap()).isFalse();
     assertThat(new ElfePair("2-3","4-5").hasCompleteOverlap()).isFalse();
@@ -27,6 +37,18 @@ class Day42022Test {
     assertThat(new ElfePair("2-8","3-7").hasCompleteOverlap()).isTrue();
     assertThat(new ElfePair("6-6","4-6").hasCompleteOverlap()).isTrue();
     assertThat(new ElfePair("2-6","4-8").hasCompleteOverlap()).isFalse();
+
+  }
+
+  @Test
+  void hasPartialOverlap(){
+
+    assertThat(new ElfePair("2-4","6-8").hasPartialOverlap()).isFalse();
+    assertThat(new ElfePair("2-3","4-5").hasPartialOverlap()).isFalse();
+    assertThat(new ElfePair("5-7","7-9").hasPartialOverlap()).isTrue();
+    assertThat(new ElfePair("2-8","3-7").hasPartialOverlap()).isTrue();
+    assertThat(new ElfePair("6-6","4-6").hasPartialOverlap()).isTrue();
+    assertThat(new ElfePair("2-6","4-8").hasPartialOverlap()).isTrue();
 
   }
 
