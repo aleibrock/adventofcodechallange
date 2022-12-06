@@ -8,6 +8,11 @@ import org.junit.jupiter.api.Test;
 class Day52022Test {
 
   @Test
+  void getMovesFromInput() {
+    assertThat(Day52022.getMovesFromInput(Input.small)).hasSize(4);
+  }
+
+  @Test
   void getStacksFromSubInput() {
 
     String s = """

@@ -16,6 +16,17 @@ public class Day52022 {
     return getStacksFromSubInput(substrings.get(0));
   }
 
+
+  static List<Move> getMovesFromInput(String input) {
+    List<String> substrings = Arrays.stream(input.split("\\n\\n")).toList();
+    assert (substrings.size() == 2);
+    List<String> rowListFromInput = InputHelper.getRowListFromInput(substrings.get(1));
+    return rowListFromInput.stream().map(s -> {
+      String[] arr = s.split(" ");
+      return new Move(Integer.parseInt(arr[1]), Integer.parseInt(arr[3]), Integer.parseInt(arr[5]));
+    }).toList();
+  }
+
   static List<Stack> getStacksFromSubInput(String s) {
     /*
                 [A]
@@ -37,9 +48,9 @@ public class Day52022 {
         // [D]
         final Character ch = columnItem.charAt(1);
         stackList
-            .computeIfAbsent((idx) /3, k -> new Stack(k, new ArrayList<>()))
+            .computeIfAbsent((idx) / 3, k -> new Stack(k, new ArrayList<>()))
             .crates.add(ch);
-        idx+=3;
+        idx += 3;
       }
     }
     return stackList.values().stream().toList();
@@ -54,6 +65,10 @@ public class Day52022 {
       }
       return Optional.of(crates.get(0));
     }
+
+  }
+
+  record Move(int amount, int from, int to) {
 
   }
 
