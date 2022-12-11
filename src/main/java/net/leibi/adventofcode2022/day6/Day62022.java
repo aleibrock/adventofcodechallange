@@ -4,14 +4,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Day62022 {
-
-  static final Integer WINDOWSIZE = 4;
-  static Integer getStartMarker(String s){
+  static Integer getStartMarker(String s, int windowSize){
     var arr = Arrays.asList(s.split(""));
-    for (int i = 0; i < arr.size()-4; i++) {
-      var candidate = arr.subList(i,i+4);
+    for (int i = 0; i < arr.size()-windowSize; i++) {
+      var candidate = arr.subList(i,i+windowSize);
       if(isStartMarker(candidate))
-        return i+4;
+        return i+windowSize;
     }
   return null;
   }
