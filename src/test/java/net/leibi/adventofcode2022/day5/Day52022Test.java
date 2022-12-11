@@ -11,13 +11,18 @@ class Day52022Test {
 
 
   @Test
+  void getStacksFromInput() {
+    assertThat(Day52022.getStacksFromInput(Input.small).size()).isEqualTo(3);
+  }
+
+  @Test
   void getTopCratesSmall(){
     assertThat(Day52022.getTopCratesAfterMove(Input.small)).isEqualTo("CMZ");
   }
 
   @Test
   void getTopCratesLarge(){
-    assertThat(Day52022.getTopCratesAfterMove(Input.large)).isEqualTo("CMZ");
+    assertThat(Day52022.getTopCratesAfterMove(Input.large)).isEqualTo("QPJPLMNNR");
   }
 
   @Test
@@ -71,4 +76,7 @@ class Day52022Test {
     assertThat(stacksFromInput.stacks().get(3).getTopCrate()).hasValue('Z');
 
   }
+
+
+
 }
