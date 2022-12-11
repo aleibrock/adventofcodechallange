@@ -3,9 +3,22 @@ package net.leibi.adventofcode2022.day5;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+import net.leibi.adventofcode2022.day5.Day52022.Move;
+import net.leibi.adventofcode2022.day5.Day52022.Stacks;
 import org.junit.jupiter.api.Test;
 
 class Day52022Test {
+
+
+  @Test
+  void getTopCratesSmall(){
+    assertThat(Day52022.getTopCratesAfterMove(Input.small)).isEqualTo("CMZ");
+  }
+
+  @Test
+  void getTopCratesLarge(){
+    assertThat(Day52022.getTopCratesAfterMove(Input.large)).isEqualTo("CMZ");
+  }
 
   @Test
   void getMovesFromInput() {
@@ -22,9 +35,40 @@ class Day52022Test {
         [Z] [M] [P] \s
          0   1   2
         """;
-    assertThat(Day52022.getStacksFromSubInput(s)).hasSize(3);
-    assertThat(Day52022.getStacksFromSubInput(s).get(0).getTopCrate()).hasValue('N');
-    assertThat(Day52022.getStacksFromSubInput(s).get(1).getTopCrate()).hasValue('D');
-    assertThat(Day52022.getStacksFromSubInput(s).get(2).getTopCrate()).hasValue('A');
+    assertThat(Day52022.getStacksFromSubInput(s).size()).isEqualTo(3);
+    assertThat(Day52022.getStacksFromSubInput(s).getTopCrate(0)).hasValue('N');
+    assertThat(Day52022.getStacksFromSubInput(s).getTopCrate(1)).hasValue('D');
+    assertThat(Day52022.getStacksFromSubInput(s).getTopCrate(2)).hasValue('A');
+  }
+
+  @Test
+  void moveCrate(){
+
+    String s = """
+                [A] \s
+            [D] [Y] \s
+        [N] [C] [X] \s
+        [Z] [M] [P] \s
+         0   1   2
+        """;
+
+    Stacks stacksFromInput = Day52022.getStacksFromSubInput(s);
+    stacksFromInput.applyMove(new Move(1,1,2));
+
+    assertThat(stacksFromInput).isNotNull();
+    assertThat(stacksFromInput.stacks().size()).isEqualTo(3);
+    assertThat(stacksFromInput.stacks().get(0).getTopCrate()).hasValue('Z');
+    assertThat(stacksFromInput.stacks().get(1).getTopCrate()).hasValue('N');
+    assertThat(stacksFromInput.stacks().get(2).getTopCrate()).hasValue('A');
+
+    stacksFromInput.applyMove(new Move(1,1,4));
+
+    assertThat(stacksFromInput).isNotNull();
+    assertThat(stacksFromInput.stacks().size()).isEqualTo(4);
+    assertThat(stacksFromInput.stacks().get(0).getTopCrate()).isEmpty();
+    assertThat(stacksFromInput.stacks().get(1).getTopCrate()).hasValue('N');
+    assertThat(stacksFromInput.stacks().get(2).getTopCrate()).hasValue('A');
+    assertThat(stacksFromInput.stacks().get(3).getTopCrate()).hasValue('Z');
+
   }
 }
