@@ -12,13 +12,19 @@ public class Day52022 {
   static String getTopCratesAfterMove(String input) {
     Stacks stacks = getStacksFromInput(input);
     List<Move> moves = getMovesFromInput(input);
-
     for (Move move : moves) {
       stacks.applyMove(move);
     }
-
     return stacks.getTopCrates();
+  }
 
+  static String getTopCratesAfterMove9001(String input) {
+    Stacks stacks = getStacksFromInput(input);
+    List<Move> moves = getMovesFromInput(input);
+    for (Move move : moves) {
+      stacks.applyMove9001(move);
+    }
+    return stacks.getTopCrates();
   }
 
   static Stacks getStacksFromInput(String input) {
@@ -51,13 +57,13 @@ public class Day52022 {
 
     var stackList = new HashMap<Integer, Stack>();
     List<String> rowListFromInput = InputHelper.getRowListFromInput(s);
-    var rowListWithoutLastRow = rowListFromInput.subList(0, rowListFromInput.size()-1);
+    var rowListWithoutLastRow = rowListFromInput.subList(0, rowListFromInput.size() - 1);
 
     for (String currentRow : rowListWithoutLastRow) {
       String[] rowArray = currentRow.split("");
       for (int i = 0; i < indeces.size(); i++) {
-        var index= indeces.get(i);
-        if (rowArray.length > index && !rowArray[index].isBlank() ) {
+        var index = indeces.get(i);
+        if (rowArray.length > index && !rowArray[index].isBlank()) {
           final Character ch = rowArray[index].charAt(0);
           stackList
               .computeIfAbsent(i, k -> new Stack(k, new ArrayList<>()))
@@ -85,7 +91,6 @@ public class Day52022 {
     return result.stream().toList();
   }
 
-
   record Stack(int StackNumber, List<Character> crates) {
 
     public void add(Optional<Character> topCrate) {
@@ -96,6 +101,22 @@ public class Day52022 {
 
     public void removeTopCrate() {
       if (crates.size() > 0) {
+        crates.remove(0);
+      }
+    }
+
+    public List<Character> getTopCrates(int amount) {
+      return crates.subList(0, amount);
+    }
+
+    public void add(List<Character> cratesToMove) {
+      for (int i = cratesToMove.size()-1; i >= 0; i--) {
+        crates.add(0, cratesToMove.get(i));
+      }
+    }
+
+    public void removeTopCrates(int amount) {
+      for (int i = 0; i < amount; i++) {
         crates.remove(0);
       }
     }
@@ -133,6 +154,12 @@ public class Day52022 {
         }
       }
       return result.toString();
+    }
+
+    void applyMove9001(Move move) {
+      var cratesToMove = get(move.from).getTopCrates(move.amount);
+      get(move.to).add(cratesToMove);
+      get(move.from).removeTopCrates(move.amount);
     }
 
     long size() {

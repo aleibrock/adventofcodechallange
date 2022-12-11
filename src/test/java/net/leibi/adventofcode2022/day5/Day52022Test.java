@@ -21,8 +21,18 @@ class Day52022Test {
   }
 
   @Test
+  void getTopCrates9001Small(){
+    assertThat(Day52022.getTopCratesAfterMove9001(Input.small)).isEqualTo("MCD");
+  }
+
+  @Test
   void getTopCratesLarge(){
     assertThat(Day52022.getTopCratesAfterMove(Input.large)).isEqualTo("QPJPLMNNR");
+  }
+
+  @Test
+  void getTopCratesLarge9001(){
+    assertThat(Day52022.getTopCratesAfterMove9001(Input.large)).isEqualTo("BQDNWJPVJ");
   }
 
   @Test
@@ -74,6 +84,36 @@ class Day52022Test {
     assertThat(stacksFromInput.stacks().get(1).getTopCrate()).hasValue('N');
     assertThat(stacksFromInput.stacks().get(2).getTopCrate()).hasValue('A');
     assertThat(stacksFromInput.stacks().get(3).getTopCrate()).hasValue('Z');
+
+  }
+
+  @Test
+  void moveCrate9001(){
+
+    String s = """
+                [A] \s
+            [D] [Y] \s
+        [N] [C] [X] \s
+        [Z] [M] [P] \s
+         0   1   2
+        """;
+
+    Stacks stacksFromInput = Day52022.getStacksFromSubInput(s);
+    stacksFromInput.applyMove9001(new Move(1,1,2));
+
+    assertThat(stacksFromInput).isNotNull();
+    assertThat(stacksFromInput.stacks().size()).isEqualTo(3);
+    assertThat(stacksFromInput.stacks().get(0).getTopCrate()).hasValue('Z');
+    assertThat(stacksFromInput.stacks().get(1).getTopCrate()).hasValue('N');
+    assertThat(stacksFromInput.stacks().get(2).getTopCrate()).hasValue('A');
+
+    stacksFromInput.applyMove9001(new Move(2,2,3));
+
+    assertThat(stacksFromInput).isNotNull();
+    assertThat(stacksFromInput.stacks().size()).isEqualTo(3);
+    assertThat(stacksFromInput.stacks().get(0).getTopCrate()).hasValue('Z');
+    assertThat(stacksFromInput.stacks().get(1).getTopCrate()).hasValue('C');
+    assertThat(stacksFromInput.stacks().get(2).getTopCrate()).hasValue('N');
 
   }
 
