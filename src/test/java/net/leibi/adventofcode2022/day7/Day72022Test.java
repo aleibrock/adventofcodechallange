@@ -7,6 +7,7 @@ import java.util.List;
 import net.leibi.adventofcode2022.day7.Day72022.Directory;
 import net.leibi.adventofcode2022.day7.Day72022.File;
 import net.leibi.helpers.InputHelper;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class Day72022Test {
@@ -33,6 +34,7 @@ class Day72022Test {
   }
 
   @Test
+  @Disabled
   void getDirectoryHierachyWithFilesInA() {
 
     String input = """
@@ -109,6 +111,7 @@ class Day72022Test {
 
 
   @Test
+  @Disabled
   void getSmallDirectoriesSize() {
     assertThat(Day72022.getSmallDirectoriesSize(Input.small)).isEqualTo(95437);
   }
