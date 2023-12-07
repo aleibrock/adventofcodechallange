@@ -10,14 +10,12 @@ class Day2Test {
 
     @Test
     void testDay2Small() {
-        assertThat(day2.getSumOfPossibleGames(Input.SMALL)).isEqualTo(2256);
-
+        assertThat(day2.getSumOfPossibleGames(Input.SMALL)).isEqualTo(8);
     }
 
     @Test
     void testDay2Big() {
-        assertThat(day2.getSumOfPossibleGames(Input.BIG)).isEqualTo(8);
-
+        assertThat(day2.getSumOfPossibleGames(Input.BIG)).isEqualTo(2256);
     }
 
 }
