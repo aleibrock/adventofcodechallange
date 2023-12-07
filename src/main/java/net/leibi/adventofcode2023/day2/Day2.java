@@ -21,6 +21,21 @@ public class Day2 {
         return listOfGames.stream().filter(this::gameIsPossible).mapToInt(Game::id).sum();
     }
 
+    public Integer getPowerSum(String input) {
+        return getListOfGames(input).stream()
+                .map(this::getSmallestCubeNumber)
+                .mapToInt(rgb -> rgb.red * rgb.blue * rgb.green)
+                .sum();
+    }
+
+    private RGB getSmallestCubeNumber(Game game) {
+        var green = game.reveal.stream().mapToInt(rgb -> rgb.green).filter(x -> x>0).max().orElse(0);
+        var red = game.reveal.stream().mapToInt(rgb -> rgb.red).filter(x -> x>0).max().orElse(0);
+        var blue = game.reveal.stream().mapToInt(rgb -> rgb.blue).filter(x -> x>0).max().orElse(0);
+        log.info("{} -> {},{},{}", game, red, green, blue);
+        return new RGB(red, green, blue);
+    }
+
     private boolean gameIsPossible(Game game) {
         return game.reveal.stream()
                 .allMatch(g -> g.blue <= cntBlue && g.red <= cntRed && g.green <= cntGreen);
