@@ -2,6 +2,7 @@ package net.leibi.adventofcode2023.day3;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -126,12 +127,19 @@ class Day3Test {
         assertThat(noPart).isNotEmpty();
         assertThat(symbols.size() + parts.size() + noPart.size()).isEqualTo(allEntries.size());
 
+        var l = new ArrayList<Day3.MatrixEntry>(allEntries.size());
+        l.addAll(parts);
+        l.addAll(symbols);
+        l.addAll(noPart);
+        assertThat(allEntries).allSatisfy(e -> assertThat(l).contains(e));
+        assertThat(l).allSatisfy(e -> assertThat(allEntries).contains(e));
+
 
         assertThat(symbols)
                 .isNotEmpty()
                 .allSatisfy(p -> assertThat(p.isSymbol()).isTrue())
                 .allSatisfy(p -> assertThat(p.number()).isEqualTo(-1))
-                .allSatisfy(p -> assertThat((p.xTo() - p.xFrom())).isEqualTo(0))
+                .allSatisfy(p -> assertThat((p.xTo() - p.xFrom())).isZero())
         ;
     }
 
@@ -155,7 +163,7 @@ class Day3Test {
     }
 
     @Test
-    void testConjoinedNumbers(){
+    void testConjoinedNumbers() {
         var s = """
                 ..313*820...666/.
                 """;
