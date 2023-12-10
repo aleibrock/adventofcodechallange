@@ -34,6 +34,17 @@ class Day3Test {
 
     @Test
     void testGetMatrixEntriesFromLine2() {
+        assertThat(day3.getMatrixEntriesFromLine("..819...*819.", 0))
+                .isEqualTo(List.of(
+                        new Day3.MatrixEntry(2, 4, 0, 819, false, "819"),
+                        new Day3.MatrixEntry(8, 8, 0, -1, true, "*"),
+                        new Day3.MatrixEntry(9, 11, 0, 819, false, "819")));
+
+
+    }
+
+    @Test
+    void testGetMatrixEntriesFromLine4() {
         assertThat(day3.getMatrixEntriesFromLine(".....+.58.", 0))
                 .isEqualTo(List.of(
                         new Day3.MatrixEntry(5, 5, 0, -1, true, "+"),
@@ -129,6 +140,24 @@ class Day3Test {
         String s = """
                 ............................................411.....................363..134.........463.775..........................506...................
                 ......429...836..$............../..960........*.............+..........*...=....381.....*........67......426.....=..../...304...............
+                """;
+        var allEntries = day3.getMatrixEntriesFromInput(s);
+        var parts = day3.getParts(allEntries);
+        var symbols = allEntries.stream().filter(Day3.MatrixEntry::isSymbol).toList();
+
+        var noPart = allEntries.stream()
+                .filter(p -> !parts.contains(p))
+                .filter(p -> !symbols.contains(p))
+                .toList();
+
+        assertThat(noPart).isNotEmpty();
+        assertThat(symbols.size() + parts.size() + noPart.size()).isEqualTo(allEntries.size());
+    }
+
+    @Test
+    void testConjoinedNumbers(){
+        var s = """
+                ..313*820...666/.
                 """;
         var allEntries = day3.getMatrixEntriesFromInput(s);
         var parts = day3.getParts(allEntries);

@@ -12,9 +12,10 @@ import java.util.*;
 public class Day3 {
 
     public Integer getSumOfPartNummbers(String input) {
-        var matrixEntries = getMatrixEntriesFromInput(input);
-        var parts = getParts(matrixEntries);
-        return parts.stream().mapToInt(m -> m.number).sum();
+        return getParts(getMatrixEntriesFromInput(input))
+                .stream()
+                .mapToInt(m -> m.number)
+                .sum();
     }
 
     List<MatrixEntry> getMatrixEntriesFromLine(String line, int lineNumber) {
@@ -92,7 +93,7 @@ public class Day3 {
         var indexList = indexMap.get(part);
         if (indexList != null)
             startIndex = indexList.getLast();
-        startIndex +=1;
+        startIndex += 1;
         var xFrom = line.indexOf(part, startIndex);
         indexMap.computeIfAbsent(part, k -> new ArrayList<>()).add(xFrom);
         try {
