@@ -20,4 +20,15 @@ class Day4Test {
 
     }
 
+
+    @Test
+    void testPointsOfPileSmall_Rec() {
+        assertThat(day4.sumPointsOfPileRecursive(Input.SMALL)).isEqualTo(30);
+    }
+
+    @Test
+    void testPointsOfPileBigRec() {
+        assertThat(day4.sumPointsOfPileRecursive(Input.BIG)).isEqualTo(6283755);
+    }
+
 }
