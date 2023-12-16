@@ -1,5 +1,7 @@
 package net.leibi.adventofcode2023.day5;
 
+import com.google.common.collect.Lists;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,12 +20,29 @@ public class Day5 {
     LookUpMap temp2HumidMap = new LookUpMap();
 
     LookUpMap humid2LocationMap = new LookUpMap();
-
+    List<BigInteger> tmpList = new ArrayList<>();
 
     BigInteger getLowestLocationNumber(String input) {
         fillInputs(input);
 
         return seedList.stream()
+                .map(seed2SOILLookUpMap::getMapping)
+                .map(soil2FertilizerMap::getMapping)
+                .map(fertilizor2WaterMap::getMapping)
+                .map(water2LightMap::getMapping)
+                .map(light2TempMap::getMapping)
+                .map(temp2HumidMap::getMapping)
+                .map(humid2LocationMap::getMapping)
+                .min(BigInteger::compareTo).orElseThrow();
+
+    }
+
+    BigInteger getLowestLocationNumberFromSeedList(String input) {
+        fillInputs(input);
+
+        List<BigInteger> completeSeedList = getCompleteSeedList();
+
+        return completeSeedList.stream()
                 .map(seed2SOILLookUpMap::getMapping)
                 .map(soil2FertilizerMap::getMapping)
                 .map(fertilizor2WaterMap::getMapping)
@@ -59,6 +78,22 @@ public class Day5 {
                 .toList());
     }
 
+    private List<BigInteger> getCompleteSeedList() {
+        var partition = Lists.partition(seedList, 2);
+        return partition.stream().flatMap(subList -> generateSeeds(subList).stream()).toList();
+    }
+
+    private List<BigInteger> generateSeeds(List<BigInteger> a) {
+        // need to get all BigIntegers from
+        //a.get(0) to a.get(0)+a.get(1)
+        tmpList.clear();
+        for (BigInteger i = a.getFirst(); i.compareTo(a.getFirst().add(a.getLast())) < 0; i = i.add(BigInteger.ONE)) {
+            tmpList.add(i);
+        }
+        return List.copyOf(tmpList);
+
+    }
+
     private void fillInputs(String input) {
         fillSeedList(input);
         fillMap(input, seed2SOILLookUpMap, "seed-to-soil map:");
@@ -71,13 +106,12 @@ public class Day5 {
     }
 
     static class LookUpMap extends ArrayList<LookUpMap.MyMapEntry> {
-        BigInteger comparator;
 
         public void fill(String inputstring) {
             // 55 98 2
             var l = Arrays.stream(inputstring.split(" ")).filter(s -> !s.isEmpty()).toList();
             var m = new MyMapEntry(l);
-            fill(m);
+            add(m);
         }
 
         BigInteger getMapping(BigInteger input) {
@@ -87,18 +121,13 @@ public class Day5 {
             return destination.orElse(input);
         }
 
-
-        void fill(MyMapEntry m) {
-            this.add(m);
-        }
-
         record MyMapEntry(BigInteger destStart, BigInteger sourceStart, BigInteger range) {
             public MyMapEntry(List<String> l) {
                 this(new BigInteger(l.get(0)), new BigInteger(l.get(1)), new BigInteger(l.get(2)));
             }
 
             public Optional<BigInteger> getDestination(BigInteger input) {
-                if (input.compareTo(sourceStart) <= 0 || input.compareTo(sourceStart.add(range)) >= 0)
+                if (input.compareTo(sourceStart) < 0 || input.compareTo(sourceStart.add(range)) > 0)
                     return Optional.empty();
 
                 return Optional.of(destStart.add(input.subtract(sourceStart)));
