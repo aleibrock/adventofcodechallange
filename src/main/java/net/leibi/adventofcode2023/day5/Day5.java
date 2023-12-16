@@ -2,30 +2,30 @@ package net.leibi.adventofcode2023.day5;
 
 import com.google.common.collect.Lists;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.LongStream;
 
 public class Day5 {
 
-    List<BigInteger> seedList = new ArrayList<>();
+    List<Long> seedList = new ArrayList<>();
     LookUpMap seed2SOILLookUpMap = new LookUpMap();
     LookUpMap soil2FertilizerMap = new LookUpMap();
     LookUpMap fertilizor2WaterMap = new LookUpMap();
     LookUpMap water2LightMap = new LookUpMap();
     LookUpMap light2TempMap = new LookUpMap();
-
     LookUpMap temp2HumidMap = new LookUpMap();
-
     LookUpMap humid2LocationMap = new LookUpMap();
-    List<BigInteger> tmpList = new ArrayList<>();
+    List<Long> tmpList = new ArrayList<>();
 
-    BigInteger getLowestLocationNumber(String input) {
-        fillInputs(input);
+    Long getLowestLocationNumber(String input) {
+        fillMaps(input);
+        fillSeedList(input);
 
         return seedList.stream()
+                .parallel()
                 .map(seed2SOILLookUpMap::getMapping)
                 .map(soil2FertilizerMap::getMapping)
                 .map(fertilizor2WaterMap::getMapping)
@@ -33,16 +33,16 @@ public class Day5 {
                 .map(light2TempMap::getMapping)
                 .map(temp2HumidMap::getMapping)
                 .map(humid2LocationMap::getMapping)
-                .min(BigInteger::compareTo).orElseThrow();
+                .min(Long::compareTo).orElseThrow();
 
     }
 
-    BigInteger getLowestLocationNumberFromSeedList(String input) {
-        fillInputs(input);
+    Long getLowestLocationNumberFromSeedList(String input) {
+        fillMaps(input);
+        fillSeedList(input);
 
-        List<BigInteger> completeSeedList = getCompleteSeedList();
-
-        return completeSeedList.stream()
+        return getCompleteSeedList()
+                .parallel()
                 .map(seed2SOILLookUpMap::getMapping)
                 .map(soil2FertilizerMap::getMapping)
                 .map(fertilizor2WaterMap::getMapping)
@@ -50,7 +50,8 @@ public class Day5 {
                 .map(light2TempMap::getMapping)
                 .map(temp2HumidMap::getMapping)
                 .map(humid2LocationMap::getMapping)
-                .min(BigInteger::compareTo).orElseThrow();
+                .boxed()
+                .min(Long::compareTo).orElseThrow();
 
     }
 
@@ -74,28 +75,23 @@ public class Day5 {
                 .stream(first.get().split(":")[1]
                         .split(" "))
                 .filter(s -> !s.isEmpty())
-                .map(myString -> new BigInteger(myString, (int) 10))
+                .map(Long::valueOf)
                 .toList());
     }
 
-    private List<BigInteger> getCompleteSeedList() {
+    private LongStream getCompleteSeedList() {
+
         var partition = Lists.partition(seedList, 2);
-        return partition.stream().flatMap(subList -> generateSeeds(subList).stream()).toList();
+        return partition.stream()
+                .flatMapToLong(x -> generateSeedsAsStream(x.getFirst(), x.getFirst() + x.getLast()));
     }
 
-    private List<BigInteger> generateSeeds(List<BigInteger> a) {
-        // need to get all BigIntegers from
-        //a.get(0) to a.get(0)+a.get(1)
-        tmpList.clear();
-        for (BigInteger i = a.getFirst(); i.compareTo(a.getFirst().add(a.getLast())) < 0; i = i.add(BigInteger.ONE)) {
-            tmpList.add(i);
-        }
-        return List.copyOf(tmpList);
-
+    private LongStream generateSeedsAsStream(Long start, Long end) {
+        return LongStream.range(start, end + 1);
     }
 
-    private void fillInputs(String input) {
-        fillSeedList(input);
+    private void fillMaps(String input) {
+
         fillMap(input, seed2SOILLookUpMap, "seed-to-soil map:");
         fillMap(input, soil2FertilizerMap, "soil-to-fertilizer map:");
         fillMap(input, fertilizor2WaterMap, "fertilizer-to-water map:");
@@ -114,24 +110,23 @@ public class Day5 {
             add(m);
         }
 
-        BigInteger getMapping(BigInteger input) {
+        Long getMapping(Long input) {
             // if input is a BigDecimal between any sourceStart and sourceStart+range
             // we return destStart + distance
             var destination = this.stream().map(myMapEntry -> myMapEntry.getDestination(input)).filter(Optional::isPresent).findFirst().orElse(Optional.empty());
             return destination.orElse(input);
         }
 
-        record MyMapEntry(BigInteger destStart, BigInteger sourceStart, BigInteger range) {
+        record MyMapEntry(Long destStart, Long sourceStart, Long range) {
             public MyMapEntry(List<String> l) {
-                this(new BigInteger(l.get(0)), new BigInteger(l.get(1)), new BigInteger(l.get(2)));
+                this(Long.valueOf(l.get(0)), Long.valueOf(l.get(1)), Long.valueOf(l.get(2)));
             }
 
-            public Optional<BigInteger> getDestination(BigInteger input) {
-                if (input.compareTo(sourceStart) < 0 || input.compareTo(sourceStart.add(range)) > 0)
+            public Optional<Long> getDestination(Long input) {
+                if (input.compareTo(sourceStart) < 0 || input.compareTo(sourceStart + range) > 0)
                     return Optional.empty();
 
-                return Optional.of(destStart.add(input.subtract(sourceStart)));
-
+                return Optional.of(destStart + (input - sourceStart));
             }
         }
 

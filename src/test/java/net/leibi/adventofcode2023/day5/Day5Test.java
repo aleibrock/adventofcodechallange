@@ -1,5 +1,6 @@
 package net.leibi.adventofcode2023.day5;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,7 +22,7 @@ class Day5Test {
 
     @Test
     void getCompleteSeedList_Big() {
-        assertThat(day5.getLowestLocationNumberFromSeedList(Input.BIG)).isEqualTo(46);
+        assertThat(day5.getLowestLocationNumberFromSeedList(Input.BIG)).isEqualTo(28580590L);
     }
 
     @Test
