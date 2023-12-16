@@ -23,13 +23,13 @@ public class Day4 {
         var originalCards = input.lines().map(this::getCardFromLine).toList();
         var copies = originalCards.stream().flatMap(card -> getCopiesFromCard(card, originalCards)).toList();
 
-        log.info("We got the following original cards: {}", originalCards.stream().map(Card::id).toList());
-        log.info("We got the following copies: {}", copies.stream().map(Card::id).toList());
+        // log.info("We got the following original cards: {}", originalCards.stream().map(Card::id).toList());
+        // log.info("We got the following copies: {}", copies.stream().map(Card::id).toList());
 
 
-        var map = Stream.concat(originalCards.stream(), copies.stream()).collect(groupingBy(Card::id, Collectors.counting()));
-        log.info("{}", map);
-       return (int) Stream.concat(originalCards.stream(), copies.stream()).count();
+        //var map = Stream.concat(originalCards.stream(), copies.stream()).collect(groupingBy(Card::id, Collectors.counting()));
+        //log.info("{}", map);
+        return (int) Stream.concat(originalCards.stream(), copies.stream()).count();
     }
 
     private Stream<Card> getCopiesFromCard(Card card, List<Card> originalCards) {
@@ -72,7 +72,7 @@ public class Day4 {
         } else {
             result = ((Double) Math.pow(2, numberOfWinningNumbers - 1)).intValue();
         }
-        log.info("Getting Points from card: {}: {}", card.id(), result);
+        //log.info("Getting Points from card: {}: {}", card.id(), result);
         return result;
     }
 
