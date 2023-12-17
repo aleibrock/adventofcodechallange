@@ -18,7 +18,6 @@ public class Day5 {
     LookUpMap light2TempMap = new LookUpMap();
     LookUpMap temp2HumidMap = new LookUpMap();
     LookUpMap humid2LocationMap = new LookUpMap();
-    List<Long> tmpList = new ArrayList<>();
 
     Long getLowestLocationNumber(String input) {
         fillMaps(input);
@@ -80,15 +79,17 @@ public class Day5 {
     }
 
     private LongStream getCompleteSeedList() {
-
+        assert (seedList.size() % 2 == 0);
         var partition = Lists.partition(seedList, 2);
-        return partition.stream()
+        return partition.parallelStream()
                 .flatMapToLong(x -> generateSeedsAsStream(x.getFirst(), x.getFirst() + x.getLast()));
     }
 
     private LongStream generateSeedsAsStream(Long start, Long end) {
+        assert (end > start);
         return LongStream.range(start, end + 1);
     }
+
 
     private void fillMaps(String input) {
 
