@@ -12,23 +12,15 @@ public class Day6 {
         var times = parseLine(small, "Time:");
         var distances = parseLine(small, "Distance:");
 
-        return IntStream.range(0, times.size()).mapToObj(index -> new Race(times.get(index), distances.get(index))).toList();
+        return IntStream.range(0, times.size())
+                .mapToObj(index -> new Race(times.get(index), distances.get(index)))
+                .toList();
     }
 
     public Long getNumberOfWaysToWin(Race race) {
-        // 7,9 -> 4
-        // 15,40 -> 8
-        // 30,200 -> 9
-
-        // startSpeed (numberOfSecondsButtonPressed) + (speed * RemainingTime) >= 9
-        // speed * (time-speed) >= distance
-
-
-        // bruteForce
         return LongStream.range(0, race.time + 1)
-                .filter(speed -> (speed * (race.time - speed)) > race.distance)
+                .filter(race::speedWinsRace)
                 .count();
-
     }
 
     public Long getProductOfWaysToWinByRaces(List<Race> races) {
@@ -51,16 +43,26 @@ public class Day6 {
     }
 
     private Long parseLineSinge(String small, String delimiter) {
-        var line = small.lines().filter(l -> l.startsWith(delimiter)).findFirst().orElseThrow();
-        var numbers = line.split(":")[1];
-        var replace = numbers.replace(" ", "");
-        return Long.valueOf(replace);
+        return Long.valueOf(small.lines()
+                .filter(l -> l.startsWith(delimiter))
+                .findFirst().orElseThrow()
+                .split(":")[1]
+                .replace(" ", ""));
     }
 
     private static List<Integer> parseLine(String small, String prefix) {
-        return Arrays.stream(small.lines().filter(line -> line.startsWith(prefix)).findFirst().orElseThrow().split(":")[1].split(" ")).filter(s -> !s.isEmpty()).map(Integer::parseInt).toList();
+        return Arrays.stream(small.lines()
+                        .filter(line -> line.startsWith(prefix)).findFirst().orElseThrow()
+                        .split(":")[1].split(" "))
+                .filter(s -> !s.isEmpty())
+                .map(Integer::parseInt)
+                .toList();
     }
 
     public record Race(long time, long distance) {
+
+        boolean speedWinsRace(Long speed) {
+            return (speed * (time - speed)) > distance;
+        }
     }
 }
