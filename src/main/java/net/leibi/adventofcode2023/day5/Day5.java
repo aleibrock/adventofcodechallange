@@ -19,38 +19,26 @@ public class Day5 {
     LookUpMap temp2HumidMap = new LookUpMap();
     LookUpMap humid2LocationMap = new LookUpMap();
 
+
     Long getLowestLocationNumber(String input) {
-        fillMaps(input);
+        var lookupMaps = fillMaps(input);
         fillSeedList(input);
 
         return seedList.stream()
                 .parallel()
-                .map(seed2SOILLookUpMap::getMapping)
-                .map(soil2FertilizerMap::getMapping)
-                .map(fertilizor2WaterMap::getMapping)
-                .map(water2LightMap::getMapping)
-                .map(light2TempMap::getMapping)
-                .map(temp2HumidMap::getMapping)
-                .map(humid2LocationMap::getMapping)
+                .map(seed -> getLocation(seed, lookupMaps))
                 .min(Long::compareTo).orElseThrow();
 
     }
 
     Long getLowestLocationNumberFromSeedList(String input) {
-        fillMaps(input);
+        var lookupMaps = fillMaps(input);
         fillSeedList(input);
 
         return getCompleteSeedList()
                 .parallel()
-                .map(seed2SOILLookUpMap::getMapping)
-                .map(soil2FertilizerMap::getMapping)
-                .map(fertilizor2WaterMap::getMapping)
-                .map(water2LightMap::getMapping)
-                .map(light2TempMap::getMapping)
-                .map(temp2HumidMap::getMapping)
-                .map(humid2LocationMap::getMapping)
-                .boxed()
-                .min(Long::compareTo).orElseThrow();
+                .map(seed -> getLocation(seed, lookupMaps))
+                .min().orElseThrow();
 
     }
 
@@ -78,6 +66,15 @@ public class Day5 {
                 .toList());
     }
 
+    private Long getLocation(Long seed, List<LookUpMap> lookupMaps) {
+        Long location = seed;
+        for (LookUpMap lookupMap : lookupMaps) {
+            location = lookupMap.getMapping(location);
+        }
+        return location;
+
+    }
+
     private LongStream getCompleteSeedList() {
         assert (seedList.size() % 2 == 0);
         var partition = Lists.partition(seedList, 2);
@@ -91,7 +88,7 @@ public class Day5 {
     }
 
 
-    private void fillMaps(String input) {
+    private List<LookUpMap> fillMaps(String input) {
 
         fillMap(input, seed2SOILLookUpMap, "seed-to-soil map:");
         fillMap(input, soil2FertilizerMap, "soil-to-fertilizer map:");
@@ -100,6 +97,8 @@ public class Day5 {
         fillMap(input, light2TempMap, "light-to-temperature map:");
         fillMap(input, temp2HumidMap, "temperature-to-humidity map:");
         fillMap(input, humid2LocationMap, "humidity-to-location map:");
+
+        return List.of(seed2SOILLookUpMap, soil2FertilizerMap, fertilizor2WaterMap, water2LightMap, light2TempMap, temp2HumidMap, humid2LocationMap);
     }
 
     static class LookUpMap extends ArrayList<LookUpMap.MyMapEntry> {
