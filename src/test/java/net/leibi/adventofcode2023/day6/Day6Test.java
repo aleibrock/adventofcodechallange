@@ -16,6 +16,13 @@ class Day6Test {
 
     }
 
+
+    @Test
+    void getRace() {
+        assertThat(day6.getRace(Input.SMALL)).isEqualTo(new Day6.Race(71530, 940200));
+
+    }
+
     @Test
     void getNumberOfWaysToWin() {
         assertThat(day6.getNumberOfWaysToWin(new Day6.Race(7, 9))).isEqualTo(4);
@@ -35,8 +42,18 @@ class Day6Test {
     }
 
     @Test
+    void getWaysToWinSingleRace() {
+        assertThat(day6.getWaysToWinSingleRace(Input.SMALL)).isEqualTo(71503);
+    }
+
+    @Test
     void getProductOfWaysToWin_BIG() {
         assertThat(day6.getProductOfWaysToWin(Input.BIG)).isEqualTo(293046L);
+    }
+
+    @Test
+    void getWaysToWinSingleRace_Big() {
+        assertThat(day6.getWaysToWinSingleRace(Input.BIG)).isEqualTo(35150181L);
     }
 
 }

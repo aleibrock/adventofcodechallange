@@ -3,6 +3,7 @@ package net.leibi.adventofcode2023.day6;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 public class Day6 {
 
@@ -24,7 +25,7 @@ public class Day6 {
 
 
         // bruteForce
-        return IntStream.range(0, race.time + 1)
+        return LongStream.range(0, race.time + 1)
                 .filter(speed -> (speed * (race.time - speed)) > race.distance)
                 .count();
 
@@ -38,10 +39,28 @@ public class Day6 {
         return getProductOfWaysToWinByRaces(getRaces(small));
     }
 
+    public Race getRace(String small) {
+        var time = parseLineSinge(small, "Time:");
+        var distance = parseLineSinge(small, "Distance:");
+
+        return new Race(time, distance);
+    }
+
+    public Long getWaysToWinSingleRace(String small) {
+        return getNumberOfWaysToWin(getRace(small));
+    }
+
+    private Long parseLineSinge(String small, String delimiter) {
+        var line = small.lines().filter(l -> l.startsWith(delimiter)).findFirst().orElseThrow();
+        var numbers = line.split(":")[1];
+        var replace = numbers.replace(" ", "");
+        return Long.valueOf(replace);
+    }
+
     private static List<Integer> parseLine(String small, String prefix) {
         return Arrays.stream(small.lines().filter(line -> line.startsWith(prefix)).findFirst().orElseThrow().split(":")[1].split(" ")).filter(s -> !s.isEmpty()).map(Integer::parseInt).toList();
     }
 
-    public record Race(int time, int distance) {
+    public record Race(long time, long distance) {
     }
 }
