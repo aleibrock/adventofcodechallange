@@ -14,6 +14,10 @@ class Day7Test {
     void getTotalWinnings() {
         assertThat(day7.getTotalWinnings(Input.SMALL)).isEqualTo(6440);
     }
+    @Test
+    void getTotalWinnings_Big() {
+        assertThat(day7.getTotalWinnings(Input.BIG)).isEqualTo(250433478L);
+    }
 
     @Test
     void getHands() {

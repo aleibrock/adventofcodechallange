@@ -22,7 +22,7 @@ public class Day7 {
         log.info("sorted hands: {}", sortedHands);
         return IntStream.range(0, sortedHands.size())
                 .mapToLong(rank -> {
-                    log.info("rank: {}, value {}, result: {}", rank, sortedHands.get(rank).Bid, sortedHands.get(rank).Bid * (rank + 1));
+                    //xlog.info("rank: {}, value {}, result: {}", rank, sortedHands.get(rank).Bid, sortedHands.get(rank).Bid * (rank + 1));
                     return sortedHands.get(rank).Bid * (rank + 1);
                 })
                 .sum();
@@ -79,6 +79,7 @@ public class Day7 {
             while (sorted.getFirst().equals(otherSorted.getFirst())) {
                 sorted.removeFirst();
                 otherSorted.removeFirst();
+                if (sorted.isEmpty()) return 0;
             }
 
             return isCardHigher(sorted.getFirst(), otherSorted.getFirst());
