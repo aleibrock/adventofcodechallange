@@ -1,19 +1,32 @@
 package net.leibi.adventofcode2023.day8;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class Day8 {
     public Long getNumberofSteps(String input) {
 
         var instructions = input.lines().findFirst().orElseThrow();
+        log.info("We have {} instructions", instructions.length());
         var maze = getMaze(input);
 
-        String currentNode = maze.getFirstNode();
+        String currentNode = "AAA";
         Long counter = 0L;
 
-        for (char c : instructions.repeat(100).toCharArray()) {
+
+        int idx = 0;
+        while (true) {
+            if (idx == instructions.length()) {
+                idx = 0;
+            }
             if (currentNode.equals("ZZZ")) break;
-            currentNode = maze.getNextNode(currentNode, c);
+            var oldNode = currentNode;
+            currentNode = maze.getNextNode(currentNode, instructions.charAt(idx));
+            log.info("{}: Next Node: {} from {} with direction {}", counter, currentNode, oldNode, instructions.charAt(idx));
             counter++;
+            idx++;
         }
+
         return counter;
     }
 
