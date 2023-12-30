@@ -15,6 +15,33 @@ public class Day11 {
         return getExpandedColumns(expandedRows);
     }
 
+    public Integer getSumOfShortestPaths(String small) {
+
+        return getGalaxyPairs(getGalaxiesFromUniverse(getExpandedUniverse(small)))
+                .stream()
+                .mapToInt(GalaxyPair::getDistance)
+                .sum();
+
+    }
+
+    List<GalaxyPair> getGalaxyPairs(List<Galaxy> galaxies) {
+
+        var galaxyPairs = new ArrayList<GalaxyPair>();
+        for (int i = 0; i < galaxies.size(); i++) {
+            var g1 = galaxies.get(i);
+            for (int i1 = 0; i1 < galaxies.size(); i1++) {
+                var g2 = galaxies.get(i1);
+                if (g1.equals(g2)) continue;
+                var gp = new GalaxyPair(g1, g2);
+                var reverseGp = new GalaxyPair(g2, g1);
+                if (!galaxyPairs.contains(gp) && !galaxyPairs.contains(reverseGp)) {
+                    galaxyPairs.add(gp);
+                }
+            }
+        }
+        return galaxyPairs;
+    }
+
     List<Galaxy> getGalaxiesFromUniverse(char[][] universe) {
 
         var galaxies = new ArrayList<Galaxy>();
@@ -77,6 +104,14 @@ public class Day11 {
 
         if (string.contains("#")) return string + "\n";
         return string + "\n" + string + "\n";
+    }
+
+    record GalaxyPair(Galaxy galaxy1, Galaxy galaxy2) {
+        public Integer getDistance() {
+            var xDist = Math.abs(galaxy1.x - galaxy2.x);
+            var yDist = Math.abs(galaxy1.y - galaxy2.y);
+            return xDist + yDist;
+        }
     }
 
     record Galaxy(int x, int y) {
