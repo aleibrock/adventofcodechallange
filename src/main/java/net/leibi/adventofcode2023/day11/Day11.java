@@ -4,13 +4,29 @@ import net.leibi.helpers.InputHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Day11 {
+
     public char[][] getExpandedUniverse(String small) {
 
         var expandedRows = small.lines().map(this::getExpandedRow).collect(Collectors.joining());
         return getExpandedColumns(expandedRows);
+    }
+
+    List<Galaxy> getGalaxiesFromUniverse(char[][] universe) {
+
+        var galaxies = new ArrayList<Galaxy>();
+        for (int x = 0; x < universe.length; x++) {
+            for (int y = 0; y < universe[x].length; y++) {
+                if (universe[x][y] == '#') {
+                    galaxies.add(new Galaxy(x, y));
+                }
+            }
+        }
+        return galaxies;
+
     }
 
     private char[][] getExpandedColumns(String expandedRows) {
@@ -25,7 +41,7 @@ public class Day11 {
         for (int i = 0; i < array.length; i++) {
             char[] currentRow = array[i];
             var newRow = new char[newWidth];
-            for (int j =0 , nj = 0; j < currentRow.length; nj++,j++) {
+            for (int j = 0, nj = 0; j < currentRow.length; nj++, j++) {
                 newRow[nj] = currentRow[j];
                 if (indexList.contains(j)) {
                     newRow[nj + 1] = '.';
@@ -61,5 +77,8 @@ public class Day11 {
 
         if (string.contains("#")) return string + "\n";
         return string + "\n" + string + "\n";
+    }
+
+    record Galaxy(int x, int y) {
     }
 }

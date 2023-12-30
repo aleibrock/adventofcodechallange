@@ -34,4 +34,14 @@ class Day11Test {
 
     }
 
+    @Test
+    void testGalaxyExtraction() {
+
+        var expandedUniverse = day11.getExpandedUniverse(Input.SMALL);
+        var galaxies = day11.getGalaxiesFromUniverse(expandedUniverse);
+
+        assertThat(galaxies).hasSize(9).contains(new Day11.Galaxy(0, 4), new Day11.Galaxy(11, 5), new Day11.Galaxy(11, 0));
+
+    }
+
 }
