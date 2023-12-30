@@ -19,7 +19,7 @@ public class Maze {
     public String getNextNode(String currentNode, char direction) {
         var key = new LoopKey(currentNode, direction);
         if (loopDetection.containsKey(key)) {
-            log.info("Loop at {}", key);
+            //log.info("Loop at {}", key);
             //throw new RuntimeException("loop: %s".formatted( key));
         }
         loopDetection.put(key, 1);
@@ -29,6 +29,10 @@ public class Maze {
             case 'L' -> mazeItem.left();
             default -> throw new RuntimeException("Unknown direction");
         };
+    }
+
+    public List<String> getStartNodes() {
+        return mazeItemMap.keySet().stream().filter(node -> node.endsWith("A")).toList();
     }
 
     record LoopKey(String node, Character direction) {

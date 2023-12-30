@@ -15,6 +15,16 @@ class Day8Test {
     }
 
     @Test
+    void smallPart2() {
+        assertThat(day8.getNumberofStepsPart2(Input.SMALLPART2)).isEqualTo(6);
+    }
+
+    @Test
+    void bigPart2() {
+        assertThat(day8.getNumberofStepsPart2(Input.BIG)).isEqualTo(6);
+    }
+
+    @Test
     void bigtest() {
         assertThat(day8.getNumberofSteps(Input.BIG)).isEqualTo(13939L);
     }
