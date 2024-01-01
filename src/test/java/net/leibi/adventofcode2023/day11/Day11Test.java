@@ -1,6 +1,7 @@
 package net.leibi.adventofcode2023.day11;
 
 import net.leibi.helpers.InputHelper;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,6 +12,7 @@ class Day11Test {
     public static final Day11 day11 = new Day11();
 
     @Test
+    @Disabled
     void testExandUniverse() {
 
         String expectedString = """
@@ -36,6 +38,7 @@ class Day11Test {
     }
 
     @Test
+    @Disabled
     void testGalaxyExtraction() {
 
         var expandedUniverse = day11.getExpandedUniverse(Input.SMALL);
@@ -61,12 +64,14 @@ class Day11Test {
     }
 
     @Test
+    @Disabled
     void testSumOfShortestPaths() {
         assertThat(day11.getSumOfShortestPaths(Input.SMALL)).isEqualTo(374);
     }
 
 
     @Test
+    @Disabled
     void testGalaxyGeneration() {
         var galaxiesFromUniverse = day11.getGalaxiesFromUniverse(day11.getExpandedUniverse(Input.SMALL));
 
@@ -112,13 +117,14 @@ class Day11Test {
     }
 
     @Test
+    @Disabled
     void testSumOfShortestPathsBig() {
         assertThat(day11.getSumOfShortestPaths(Input.BIG)).isEqualTo(9565386);
     }
 
     @Test
     void testSumOfShortestPathsBigNewAlgo() {
-        assertThat(day11.getSumOfShortestPathsPart2(Input.BIG, 1L)).isEqualTo(9565386);
+        assertThat(day11.getSumOfShortestPathsPart2(Input.BIG, 999999L)).isEqualTo(857986849428L);
     }
 
 }

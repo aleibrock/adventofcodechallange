@@ -3,9 +3,7 @@ package net.leibi.adventofcode2023.day11;
 import lombok.extern.slf4j.Slf4j;
 import net.leibi.helpers.InputHelper;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -56,9 +54,9 @@ public class Day11 {
 
     }
 
-    List<GalaxyPair> getGalaxyPairs(List<Galaxy> galaxies) {
+    Set<GalaxyPair> getGalaxyPairs(List<Galaxy> galaxies) {
 
-        var galaxyPairs = new ArrayList<GalaxyPair>();
+        var galaxyPairs = new HashSet<GalaxyPair>();
         for (int i = 0; i < galaxies.size(); i++) {
             var g1 = galaxies.get(i);
             for (int i1 = 0; i1 < galaxies.size(); i1++) {
