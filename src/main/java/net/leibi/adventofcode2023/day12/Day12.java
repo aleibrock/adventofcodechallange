@@ -6,7 +6,7 @@ import java.util.List;
 public class Day12 {
 
     public Long getSumOfPossibilities(String input) {
-        return input.lines().mapToLong(this::getPossibilitiesForRow).sum();
+        return input.lines().parallel().mapToLong(this::getPossibilitiesForRow).sum();
     }
 
     public Long getPossibilitiesForRow(String s) {

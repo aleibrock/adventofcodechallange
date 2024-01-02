@@ -13,6 +13,11 @@ class Day12Test {
         assertThat(day12.getSumOfPossibilities(Input.SMALL)).isEqualTo(21);
     }
 
+    @Test
+    void testSumOfPossibilitiesBig() {
+        assertThat(day12.getSumOfPossibilities(Input.BIG)).isEqualTo(7236L);
+    }
+
 
     @Test
     void testGetPossibilitiesForRow1() {

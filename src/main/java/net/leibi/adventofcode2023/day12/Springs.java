@@ -7,7 +7,7 @@ public record Springs(String pattern, List<Integer> brokenSprings) {
     public Long getPossibilities() {
         var possibilities = getAllPossibilites().stream().filter(string -> !string.contains("?")).distinct().toList();
 
-        var patternLists = possibilities.stream()
+        var patternLists = possibilities.parallelStream()
                 .map(this::getHashLists)
                 .filter(list -> list.size() == brokenSprings.size())
                 .filter(this::listPatternMatchesBrokenSprings)
