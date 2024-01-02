@@ -1,0 +1,14 @@
+package net.leibi.adventofcode2023.day12;
+
+public class Input {
+
+    public static final String SMALL = """
+            ???.### 1,1,3
+            .??..??...?##. 1,1,3
+            ?#?#?#?#?#?#?#? 1,3,1,6
+            ????.#...#... 4,1,1
+            ????.######..#####. 1,6,5
+            ?###???????? 3,2,1
+            """;
+
+}
