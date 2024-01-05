@@ -14,6 +14,20 @@ class Day14Test {
     }
 
     @Test
+    void testTiltTest2() {
+        assertThat(day14.tilt("""
+                .#O
+                ...
+                OOO
+                """))
+                .isEqualTo("""
+                O#O
+                .OO
+                ...
+                """);
+    }
+
+    @Test
     void testLoad() {
         assertThat(day14.sumLoad(Input.SMALL_TILTED)).isEqualTo(136);
     }
