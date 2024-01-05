@@ -19,6 +19,15 @@ class Day14Test {
     }
 
     @Test
+    void testLoadSmall() {
+        assertThat(day14.sumLoad("OOOO.#.O..")).isEqualTo(5);
+        assertThat(day14.sumLoad("""
+                OOOO.#.O..  
+                OO..#....#
+                """)).isEqualTo((5 * 2) + 2);
+    }
+
+    @Test
     void testPart1Small() {
         assertThat(day14.part1(Input.SMALL)).isEqualTo(136);
     }

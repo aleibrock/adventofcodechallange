@@ -1,5 +1,7 @@
 package net.leibi.adventofcode2023.day14;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 public class Day14 {
     public String tilt(String small) {
         return Input.SMALL_TILTED;
@@ -7,7 +9,19 @@ public class Day14 {
 
 
     public long sumLoad(String smallTilted) {
-        return 136;
+        AtomicLong myCount = new AtomicLong(smallTilted.lines().count());
+
+        return smallTilted.lines()
+                .map(string -> string
+                        .replace("#", "")
+                        .replace(".", "")
+                        .trim())
+                .mapToLong(line -> {
+                    var r = line.length() * myCount.get();
+                    myCount.getAndDecrement();
+                    return r;
+                })
+                .sum();
     }
 
 
