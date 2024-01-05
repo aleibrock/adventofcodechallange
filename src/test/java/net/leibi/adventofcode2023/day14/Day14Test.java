@@ -36,7 +36,7 @@ class Day14Test {
     void testLoadSmall() {
         assertThat(day14.sumLoad("OOOO.#.O..")).isEqualTo(5);
         assertThat(day14.sumLoad("""
-                OOOO.#.O..  
+                OOOO.#.O..
                 OO..#....#
                 """)).isEqualTo((5 * 2) + 2);
     }
