@@ -195,6 +195,11 @@ class Day14Test {
     }
 
     @Test
+    void testCyclPerformancee() {
+        assertThat(day14.cycle(Input.BIG, 100_000)).isNotBlank();
+    }
+
+    @Test
     void testLoad() {
         assertThat(day14.sumLoad(Input.SMALL_TILTED)).isEqualTo(136);
     }
@@ -214,7 +219,7 @@ class Day14Test {
     }
 
     @Test
-    @Disabled("Because")
+    @Disabled
     void testPart2Small() {
         assertThat(day14.part2(Input.SMALL)).isEqualTo(64);
     }
@@ -222,6 +227,12 @@ class Day14Test {
     @Test
     void testPart1Big() {
         assertThat(day14.part1(Input.BIG)).isEqualTo(103614L);
+    }
+
+    @Test
+    @Disabled
+    void testPart2Big() {
+        assertThat(day14.part2(Input.BIG)).isEqualTo(103614L);
     }
 
 }

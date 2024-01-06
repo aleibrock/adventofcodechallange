@@ -11,13 +11,14 @@ public class Day14 {
     public String tilt(String input) {
 
         final var charMatrixFromInput = InputHelper.getCharMatrixFromInput(input);
-        tiltMirrors(charMatrixFromInput, Directions.NORTH);
+        tiltNorth(charMatrixFromInput);
 
         return getStringFromCharArray(charMatrixFromInput);
     }
 
     public String cycle(String input, long times) {
         final var charMatrixFromInput = InputHelper.getCharMatrixFromInput(input);
+
         for (long i = 0; i < times; i++) {
             if (i % 1_000_000 == 0)
                 log.info("Cycle # {}", i);
@@ -50,24 +51,15 @@ public class Day14 {
         return sumLoad(cycle(small, 1_000_000_000));
     }
 
-    static void tiltMirrors(char[][] charMatrixFromInput, Directions direction) {
-        switch (direction) {
-            case NORTH -> tiltNorth(charMatrixFromInput);
-            case EAST -> tiltEast(charMatrixFromInput);
-            case WEST -> tiltWest(charMatrixFromInput);
-            case SOUTH -> tiltSouth(charMatrixFromInput);
-        }
-    }
-
     static void tiltSouth(char[][] charMatrixFromInput) {
+        var tmpRow = 0;
         for (int row = charMatrixFromInput.length - 1; row >= 0; row--) {
             char[] currentRow = charMatrixFromInput[row];
             for (int col = 0; col < currentRow.length; col++) {
                 // move the current item as high as it gets
-                char node = charMatrixFromInput[row][col];
-                if (node == 'O') {
+                if (currentRow[col] == 'O') {
                     charMatrixFromInput[row][col] = '.';
-                    int tmpRow = row + 1;
+                    tmpRow = row + 1;
                     while (tmpRow < charMatrixFromInput.length && charMatrixFromInput[tmpRow][col] == '.') {
                         tmpRow++;
                     }
@@ -80,25 +72,27 @@ public class Day14 {
 
     static void tiltEast(char[][] charMatrixFromInput) {
         for (int row = 0; row < charMatrixFromInput.length; row++) {
-            moveRight(charMatrixFromInput, row);
+            char[] currentRow = charMatrixFromInput[row];
+            moveRight(currentRow);
         }
     }
 
     static void tiltWest(char[][] charMatrixFromInput) {
         for (int row = 0; row < charMatrixFromInput.length; row++) {
-            moveLeft(charMatrixFromInput, row);
+            char[] currentRow = charMatrixFromInput[row];
+            moveLeft(currentRow);
         }
     }
 
     static void tiltNorth(char[][] charMatrixFromInput) {
+        var tmpRow = 0;
         for (int row = 1; row < charMatrixFromInput.length; row++) {
             char[] currentRow = charMatrixFromInput[row];
             for (int col = 0; col < currentRow.length; col++) {
                 // move the current item as high as it gets
-                char node = charMatrixFromInput[row][col];
-                if (node == 'O') {
-                    charMatrixFromInput[row][col] = '.';
-                    int tmpRow = row - 1;
+                if (currentRow[col] == 'O') {
+                    currentRow[col] = '.';
+                    tmpRow = row - 1;
                     while (tmpRow >= 0 && charMatrixFromInput[tmpRow][col] == '.') {
                         tmpRow--;
                     }
@@ -120,55 +114,47 @@ public class Day14 {
         return sb.toString();
     }
 
-    static void moveLeft(char[][] charMatrixFromInput, int row) {
-        char[] currentRow = charMatrixFromInput[row];
+    static void moveLeft(char[] currentRow) {
+        var tmpCol = 0;
         for (int col = 0; col < currentRow.length; col++) {
             // move the left
-            char node = currentRow[col];
-            if (node == 'O') {
+            if (currentRow[col] == 'O') {
                 currentRow[col] = '.';
-                var tmpCol = col - 1;
+                tmpCol = col - 1;
                 while (tmpCol >= 0 && currentRow[tmpCol] == '.') {
                     tmpCol--;
                 }
                 if (tmpCol != col) {
                     tmpCol += 1;
-                    charMatrixFromInput[row][tmpCol] = 'O';
+                    currentRow[tmpCol] = 'O';
                 }
             }
         }
     }
 
-    static void moveRight(char[][] charMatrixFromInput, int row) {
-        char[] currentRow = charMatrixFromInput[row];
+    static void moveRight(char[] currentRow) {
+
+        var tmpCol = 0;
         for (int col = currentRow.length - 1; col >= 0; col--) {
             // move the left
-            char node = currentRow[col];
-            if (node == 'O') {
+            if (currentRow[col] == 'O') {
                 currentRow[col] = '.';
-                var tmpCol = col + 1;
+                tmpCol = col + 1;
                 while (tmpCol < currentRow.length && currentRow[tmpCol] == '.') {
                     tmpCol++;
                 }
                 if (tmpCol != col) {
                     tmpCol -= 1;
-                    charMatrixFromInput[row][tmpCol] = 'O';
+                    currentRow[tmpCol] = 'O';
                 }
             }
         }
     }
 
     private void cycleMirrors(char[][] charMatrixFromInput) {
-        tiltMirrors(charMatrixFromInput, Directions.NORTH);
-        tiltMirrors(charMatrixFromInput, Directions.WEST);
-        tiltMirrors(charMatrixFromInput, Directions.SOUTH);
-        tiltMirrors(charMatrixFromInput, Directions.EAST);
-    }
-
-    enum Directions {
-        NORTH,
-        WEST,
-        SOUTH,
-        EAST
+        tiltNorth(charMatrixFromInput);
+        tiltWest(charMatrixFromInput);
+        tiltSouth(charMatrixFromInput);
+        tiltEast(charMatrixFromInput);
     }
 }
