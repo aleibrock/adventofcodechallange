@@ -230,7 +230,6 @@ class Day14Test {
     }
 
     @Test
-    @Disabled
     void testPart2Big() {
         assertThat(day14.part2(Input.BIG)).isEqualTo(103614L);
     }
