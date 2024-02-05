@@ -1,5 +1,6 @@
 package net.leibi.adventofcode2023.day12;
 
+
 import java.util.*;
 
 public record Springs(String pattern, List<Integer> brokenSprings) {
@@ -42,21 +43,24 @@ public record Springs(String pattern, List<Integer> brokenSprings) {
     private Set<String> replaceAtIndex(String pattern, List<Integer> qmlist, int i) {
 
         var set = new HashSet<String>();
-
-        var x = replaceChar(pattern, '#', qmlist.get(i));
-        var y = replaceChar(pattern, '.', qmlist.get(i));
-
-        set.add(x);
-        set.add(y);
-
-        if (i < qmlist.size() - 1) {
-            set.addAll(replaceAtIndex(x, qmlist, i + 1));
-            set.addAll(replaceAtIndex(y, qmlist, i + 1));
+    
+        if (i == qmlist.size()) {
+            set.add(pattern);
+            return set;
         }
-
+    
+        int index = qmlist.get(i);
+        var x = replaceChar(pattern, '#', index);
+        var y = replaceChar(pattern, '.', index);
+    
+        set.addAll(replaceAtIndex(x, qmlist, i + 1));
+        set.addAll(replaceAtIndex(y, qmlist, i + 1));
+    
         return set;
-
+    
     }
+    
+
 
     private List<Integer> getIndicesOfQM() {
         int c = 0;
