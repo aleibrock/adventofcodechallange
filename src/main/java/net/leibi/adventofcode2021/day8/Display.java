@@ -1,8 +1,8 @@
 package net.leibi.adventofcode2021.day8;
 
-import static java.util.Objects.isNull;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
-import java.rmi.UnexpectedException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,9 +11,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import lombok.Getter;
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
+
+import static java.util.Objects.isNull;
 
 @Getter
 @Slf4j
@@ -197,7 +196,6 @@ public class Display {
     return result;
   }
 
-  @SneakyThrows
   private String getCharForIndex(int i) {
     return switch (i) {
       case 0 -> "a";
@@ -207,7 +205,7 @@ public class Display {
       case 4 -> "e";
       case 5 -> "f";
       case 6 -> "g";
-      default -> throw new UnexpectedException(String.valueOf(i));
+      default -> "";
     };
   }
 }

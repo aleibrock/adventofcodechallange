@@ -1,39 +1,45 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.2.0'
-	id 'io.spring.dependency-management' version '1.1.4'
-	id 'org.graalvm.buildtools.native' version '0.9.28'
-	id 'com.intershop.gradle.jaxb' version "6.0.0"
+    id 'java'
+    id 'org.springframework.boot' version '3.3.5'
+    id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'net.leibi'
 version = '0.0.1-SNAPSHOT'
-
 java {
-	sourceCompatibility = '21'
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(23)
+    }
 }
 
+
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
 
-	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation 'com.google.guava:guava:31.1-jre'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'com.google.guava:guava:31.1-jre'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
-	useJUnitPlatform()
-	minHeapSize = "8g"
-	maxHeapSize = "64g"
+    useJUnitPlatform()
+    minHeapSize = "8g"
+    maxHeapSize = "64g"
+    jvmArgs(['--enable-preview'])
+}
+
+
+tasks.withType(JavaCompile).each {
+    it.options.compilerArgs.add('--enable-preview')
 }

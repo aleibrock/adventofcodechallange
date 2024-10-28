@@ -2,11 +2,13 @@ package net.leibi.helpers;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Slf4j
 public class InputHelper {
 
     public static List<Integer> getIntegerListFromInput(final String input) {
@@ -73,5 +75,11 @@ public class InputHelper {
             result[currentRow++] = row;
         }
         return result;
+    }
+
+    public static void printCharArray(char[][] charMatrix) {
+        for (char[] row : charMatrix) {
+            log.info(Arrays.toString(row));
+        }
     }
 }
