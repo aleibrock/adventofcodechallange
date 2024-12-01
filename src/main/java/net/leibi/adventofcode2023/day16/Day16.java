@@ -4,7 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import net.leibi.helpers.InputHelper;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 
 @Slf4j
@@ -14,6 +16,8 @@ public class Day16 {
     private static final Map<MovingDecisionKey, MovingDirection> movingDirectionsMap = getMovingDirectionsMap();
     private static char[][] charMatrixFromInput;
     private static char[][] energizedCharMatrix;
+
+    private static final Set<DirectedPoint> alreadySeenDirectedPoints = new HashSet<>();
 
     public static long day1(String input) {
 
@@ -68,15 +72,14 @@ public class Day16 {
     }
 
     static MovingDirection getMovingDirection(MovingDirection direction, Character device) {
-        log.info("Getting moving direction on device {} with direction {}", device, direction);
-        return switch (device) {
-            case '.' -> direction;
-            default -> movingDirectionsMap.get(new MovingDecisionKey(direction, device));
-        };
+        if (device == '.') return direction;
+        return movingDirectionsMap.get(new MovingDecisionKey(direction, device));
     }
 
     private static void followBeam(DirectedPoint directedPoint) {
         if (directedPoint == null || directedPoint.point == null) return;
+        if(alreadySeenDirectedPoints.contains(directedPoint)) return;
+        alreadySeenDirectedPoints.add(directedPoint);
         log.info("Following beam: {}", directedPoint);
         var nextMovingDirection = getNewMovingDirection(directedPoint);
         final var nextPoints = directedPoint.point.getNextPoint(nextMovingDirection);
@@ -87,7 +90,11 @@ public class Day16 {
     }
 
     private static MovingDirection getNewMovingDirection(DirectedPoint directedPoint) {
-        if (directedPoint.point == null) return directedPoint.movingDirection;
+        if (directedPoint.point == null)
+        {
+            log.info("Dore");
+            return directedPoint.movingDirection;
+        }
         var device = getDevice(directedPoint);
         return getMovingDirection(directedPoint.movingDirection, device);
     }
@@ -112,20 +119,21 @@ public class Day16 {
     record Point(int x, int y) {
         Point {
             if (x < 0 || y < 0 || x >= charMatrixFromInput.length || y >= charMatrixFromInput[0].length) {
+                log.info("Not a good point {},{}",x,y);
                 throw new IllegalArgumentException();
             }
         }
 
         NextDirections getNextPoint(MovingDirection movingDirection) {
             return switch (movingDirection) {
-                case RIGHT -> new NextDirections(new DirectedPoint(x , y+1, MovingDirection.RIGHT), null);
-                case LEFT -> new NextDirections(new DirectedPoint(x , y-1, MovingDirection.LEFT), null);
-                case UP -> new NextDirections(new DirectedPoint(x-1, y , MovingDirection.UP), null);
-                case DOWN -> new NextDirections(new DirectedPoint(x+1, y , MovingDirection.DOWN), null);
+                case RIGHT -> new NextDirections(new DirectedPoint(x, y + 1, MovingDirection.RIGHT), null);
+                case LEFT -> new NextDirections(new DirectedPoint(x, y - 1, MovingDirection.LEFT), null);
+                case UP -> new NextDirections(new DirectedPoint(x - 1, y, MovingDirection.UP), null);
+                case DOWN -> new NextDirections(new DirectedPoint(x + 1, y, MovingDirection.DOWN), null);
                 case UPANDDOWN ->
-                        new NextDirections(new DirectedPoint(x+1, y , MovingDirection.DOWN), new DirectedPoint(x-1, y , MovingDirection.UP));
+                        new NextDirections(new DirectedPoint(x + 1, y, MovingDirection.DOWN), new DirectedPoint(x - 1, y, MovingDirection.UP));
                 case LEFTANDRIGHT ->
-                        new NextDirections(new DirectedPoint(x , y+1, MovingDirection.LEFT), new DirectedPoint(x , y+1, MovingDirection.RIGHT));
+                        new NextDirections(new DirectedPoint(x, y + 1, MovingDirection.LEFT), new DirectedPoint(x, y + 1, MovingDirection.RIGHT));
             };
         }
 
@@ -141,7 +149,7 @@ public class Day16 {
             try {
                 p = new Point(x, y);
             } catch (IllegalArgumentException e) {
-                log.info("Point hitting a wall: {},{}", x,y);
+                log.info("Point hitting a wall: {},{}", x, y);
             }
             this(p, movingDirection);
         }
