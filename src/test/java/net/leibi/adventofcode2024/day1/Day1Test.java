@@ -28,5 +28,16 @@ class Day1Test {
         assertThat(day1.part1(Input.BIG)).isEqualTo(2904518L);
     }
 
+    @Test
+    void testDay1Part2Small(){
+        assertThat(day1.part2(Input.SMALL)).isEqualTo(31);
+    }
+
+    @Test
+    void testDay1Part2Big(){
+        assertThat(day1.part2(Input.BIG)).isEqualTo(18650129);
+    }
+
+
 
 }

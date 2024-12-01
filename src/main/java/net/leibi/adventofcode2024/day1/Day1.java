@@ -38,4 +38,22 @@ public class Day1 {
         return sum;
     }
 
+    public long part2(String input) {
+
+        var lists = getListOfListsFromInput(input);
+        var scores = getSimilarityScores(lists.get(0), lists.get(1));
+
+        return scores.stream().mapToLong(i -> i).sum();
+    }
+
+    private List<Long> getSimilarityScores(List<Integer> left, List<Integer> right) {
+
+        var scores = new ArrayList<Long>();
+        for (var i : left) {
+            final var count = right.stream().filter(v -> v.equals(i)).count();
+            var score = count * i;
+            scores.add(score);
+        }
+        return scores;
+    }
 }
