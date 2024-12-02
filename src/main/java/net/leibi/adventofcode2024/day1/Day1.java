@@ -30,7 +30,7 @@ public class Day1 {
         left.sort(Integer::compareTo);
         right.sort(Integer::compareTo);
 
-        Integer sum = 0;
+        int sum = 0;
         for (var i = 0; i < left.size(); i++) {
             sum += Math.abs(left.get(i) - right.get(i));
         }
@@ -41,19 +41,28 @@ public class Day1 {
     public long part2(String input) {
 
         var lists = getListOfListsFromInput(input);
-        var scores = getSimilarityScores(lists.get(0), lists.get(1));
+        int[] rightArray = lists.get(1).stream().mapToInt(Integer::intValue).toArray();
+        var scores = getSimilarityScores(lists.get(0), rightArray);
 
         return scores.stream().mapToLong(i -> i).sum();
     }
 
-    private List<Long> getSimilarityScores(List<Integer> left, List<Integer> right) {
+    private List<Long> getSimilarityScores(List<Integer> left, int[] right) {
 
         var scores = new ArrayList<Long>();
-        for (var i : left) {
-            final var count = right.stream().filter(v -> v.equals(i)).count();
-            var score = count * i;
-            scores.add(score);
+
+
+        for (var currentNumber : left) {
+            scores.add(getCountOfOccurancesOfNumberInList(right, currentNumber) * currentNumber);
         }
         return scores;
+    }
+
+    private static long getCountOfOccurancesOfNumberInList(int[] right, int i) {
+        long cnt = 0;
+        for (int integer : right) {
+            if (i == integer) cnt++;
+        }
+        return cnt;
     }
 }
