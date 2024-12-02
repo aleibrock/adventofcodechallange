@@ -4,33 +4,52 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Day2 {
-    public long part1(String input) {
-        final var list = input.lines().map(s -> s.split("\\s+")).toList();
-        return list.stream().filter(a -> isSafe(Arrays.asList(a))).count();
+
+  public static final int MIN_SAFE = 1;
+  public static final int MAX_SAFE = 3;
+
+  public long part1(String input) {
+    final var list = input.lines().map(s -> s.split("\\s+")).toList();
+
+    long cnt = 0;
+    for (String[] strings : list) {
+      var integerList = Arrays.stream(strings).map(Integer::parseInt).toList();
+      if (isSafe(integerList)) {
+        cnt++;
+      }
     }
+    return cnt;
+  }
 
-    boolean isSafe(List<Integer> report) {
+  boolean isSafe(List<Integer> report) {
 
-        int minSafe = 1;
-        int maxSafe = 3;
+    Direction direction = getDirection(getDiff(report, 1));
+    boolean returnValue = true;
+    for (var i = 1; i < report.size(); i++) {
+      var diff = getDiff(report, i);
+      if (isNotSafeDistance(diff)) return false;
 
-        Direction direction = report.get(1) - report.get(0) > 0 ? Direction.INC : Direction.DEC;
-        for (var i = 1; i < report.size(); i++) {
-            var diff = report.get(i) - report.get(i - 1);
-            if (Math.abs(diff) > maxSafe || Math.abs(diff) < minSafe)
-                return false;
-
-            Direction localDir = diff > 0 ? Direction.INC : Direction.DEC;
-            if (localDir != direction)
-                return false;
-        }
-        return true;
+      Direction localDir = getDirection(diff);
+      if (localDir != direction) return false;
     }
+    return returnValue;
+  }
 
-    enum Direction {
-        INC,
-        DEC,
-        BOTH
-    }
+  private static int getDiff(List<Integer> report, int i) {
+    return report.get(i) - report.get(i - 1);
+  }
 
+  private static Direction getDirection(int diff) {
+    return diff > 0 ? Direction.INC : Direction.DEC;
+  }
+
+  private static boolean isNotSafeDistance(int diff) {
+    return Math.abs(diff) > MAX_SAFE || Math.abs(diff) < MIN_SAFE;
+  }
+
+  enum Direction {
+    INC,
+    DEC,
+    BOTH
+  }
 }

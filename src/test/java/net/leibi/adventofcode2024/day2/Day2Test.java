@@ -16,6 +16,11 @@ class Day2Test {
         assertThat((day2.part1(Input.SMALL))).isEqualTo(2L);
     }
 
+    @Test
+    void part1Big(){
+        assertThat((day2.part1(Input.BIG))).isEqualTo(624L);
+    }
+
 
     @Test
     void isSafe(){
