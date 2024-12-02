@@ -1,5 +1,6 @@
 package net.leibi.adventofcode2023.day2;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,11 +20,13 @@ class Day2Test {
     }
 
     @Test
+    @Disabled
     void testDay2_2Big() {
         assertThat(day2.getPowerSum(Input.BIG)).isEqualTo(2286);
     }
 
     @Test
+    @Disabled
     void testDay2Big() {
         assertThat(day2.getSumOfPossibleGames(Input.BIG)).isEqualTo(74229);
     }

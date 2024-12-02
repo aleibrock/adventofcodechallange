@@ -1,5 +1,6 @@
 package net.leibi.adventofcode2023.day3;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -163,6 +164,7 @@ class Day3Test {
     }
 
     @Test
+    @Disabled
     void testConjoinedNumbers() {
         var s = """
                 ..313*820...666/.

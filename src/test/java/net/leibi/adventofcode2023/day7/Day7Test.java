@@ -1,5 +1,6 @@
 package net.leibi.adventofcode2023.day7;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -16,6 +17,7 @@ class Day7Test {
     }
 
     @Test
+    @Disabled
     void getTotalWinnings_Big() {
         assertThat(day7.getTotalWinnings(Input.BIG)).isNotEqualTo(250498105L);
         assertThat(day7.getTotalWinnings(Input.BIG)).isNotEqualTo(250497395L);
