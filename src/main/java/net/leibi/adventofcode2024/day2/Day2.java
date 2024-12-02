@@ -30,28 +30,40 @@ public class Day2 {
         final var failedIndices = getFailedIndices(report, direction);
         if (dampener && !failedIndices.isEmpty()) {
             for (var i = 0; i < report.size(); i++) {
-                var clone = new ArrayList<>(report);
-                clone.remove(i);
+                final var clone = getReducedClone(report, i);
                 if (isSafe(clone, false)) return true;
             }
         }
         return failedIndices.isEmpty();
     }
 
+    private static ArrayList<Integer> getReducedClone(List<Integer> report, int i) {
+        var clone = new ArrayList<>(report);
+        clone.remove(i);
+        return clone;
+    }
+
     private static Set<Integer> getFailedIndices(List<Integer> report, Direction direction) {
         Set<Integer> failedIndices = new HashSet<>();
-        for (var i = 1; i < report.size(); i++) {
-            var diff = getDiff(report, i);
-            if (isNotSafeDistance(diff)) {
-                failedIndices.add(i - 1);
-            }
-
-            Direction localDir = getDirection(diff);
-            if (localDir != direction) {
-                failedIndices.add(i - 1);
-            }
+        for (var index = 1; index < report.size(); index++) {
+            var diff = getDiff(report, index);
+            addToFailedIndicesIfUnsafeDistance(diff, failedIndices, index);
+            addToFailedIndicesIfDirectionChanges(direction, diff, failedIndices, index);
         }
         return failedIndices;
+    }
+
+    private static void addToFailedIndicesIfDirectionChanges(Direction direction, int diff, Set<Integer> failedIndices, int i) {
+        Direction localDir = getDirection(diff);
+        if (localDir != direction) {
+            failedIndices.add(i - 1);
+        }
+    }
+
+    private static void addToFailedIndicesIfUnsafeDistance(int diff, Set<Integer> failedIndices, int i) {
+        if (isNotSafeDistance(diff)) {
+            failedIndices.add(i - 1);
+        }
     }
 
     private static int getDiff(List<Integer> report, int i) {
