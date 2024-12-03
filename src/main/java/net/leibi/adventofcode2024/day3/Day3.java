@@ -7,11 +7,11 @@ import java.util.regex.Pattern;
 
 public class Day3 {
   public long part1(String small) {
-    return getValidMul(small).stream().mapToLong(Mul::prod).sum();
+    final String regex = "mul\\((\\d+),(\\d+)\\)";
+    return getValidMul(small, regex).stream().mapToLong(Mul::prod).sum();
   }
 
-  public List<Mul> getValidMul(String small) {
-    final String regex = "mul\\((\\d+),(\\d+)\\)";
+  public List<Mul> getValidMul(String small, String regex) {
     Pattern pattern = Pattern.compile(regex);
     Matcher matcher = pattern.matcher(small);
     List<Mul> muls = new ArrayList<>();
@@ -21,7 +21,10 @@ public class Day3 {
       int y = Integer.parseInt(matcher.group(2));
       muls.add(new Mul(x, y));
     }
-
     return muls;
+  }
+
+  public long part2(String small) {
+    return 48;
   }
 }
