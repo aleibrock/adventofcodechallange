@@ -15,7 +15,7 @@ class Day3Test {
 
   @Test
   void testPart2() {
-    assertThat(day3.part2(Input.SMALL)).isEqualTo(48);
+    assertThat(day3.part2(Input.SMALL2)).isEqualTo(48);
   }
 
   @Test

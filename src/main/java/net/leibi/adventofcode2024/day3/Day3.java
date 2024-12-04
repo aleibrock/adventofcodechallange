@@ -25,6 +25,7 @@ public class Day3 {
   }
 
   public long part2(String small) {
-    return 48;
+    final String regex = "(?<=do\\(\\)[^\\s]*)mul\\((\\d+),(\\d+)\\)";
+    return getValidMul(small, regex).stream().mapToLong(Mul::prod).sum();
   }
 }
